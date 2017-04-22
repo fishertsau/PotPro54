@@ -1,0 +1,40 @@
+.app-cartProduct {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -ms-flex-pack: distribute;
+  justify-content: space-around; }
+  .app-cartProduct form, .app-cartProduct div, .app-cartProduct p {
+    margin: 0; }
+
+.app-cartProduct--title {
+  -ms-flex: 3;
+  flex: 3; }
+
+.app-cartProduct--unitPrice {
+  -ms-flex: 2;
+  flex: 2; }
+
+.app-cartProduct--subTotal {
+  -ms-flex: 5;
+  flex: 5; }
+
+.app-cartProduct--qty {
+  -ms-flex: 3;
+  flex: 3; }
+  .app-cartProduct--qty input[type="number"] {
+    font-size: 24px; }
+
+@media screen and (min-width: 768px) {
+  .app-cartProduct {
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center; }
+  .app-cartProduct--qty input[type="number"] {
+    font-size: 14px; } }
+
+/*# sourceMappingURL=cart.css.map */

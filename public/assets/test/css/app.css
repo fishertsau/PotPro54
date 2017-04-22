@@ -1,0 +1,20 @@
+.alert {
+  position: relative;
+  background: lightgray;
+  padding: 0.8em;
+  border: 1px solid lightcoral; }
+
+.alert--success {
+  background: green;
+  color: white; }
+
+.alert--error {
+  background: red;
+  color: white; }
+
+.alert__close {
+  position: absolute;
+  right: 1em;
+  top: 1em; }
+
+/*# sourceMappingURL=app.css.map */

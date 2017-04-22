@@ -1,0 +1,63 @@
+.app-addOnInfo {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+
+.app-addOnInfo--title {
+  -ms-flex: 2;
+  flex: 2; }
+
+.app-addOnInfo--unitQty {
+  -ms-flex: 4;
+  flex: 4;
+  width: 100%;
+  margin-right: 5px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center; }
+
+.app-addOnInfo--unitQty--title {
+  color: #505662;
+  -ms-flex: 2;
+  flex: 2;
+  text-align: right; }
+
+.app-addOnInfo--unitQty--input {
+  -ms-flex: 3;
+  flex: 3; }
+  .app-addOnInfo--unitQty--input input, .app-addOnInfo--unitQty--input p {
+    text-align: center; }
+
+.app-addOnInfo--note {
+  -ms-flex: 5;
+  flex: 5;
+  width: 100%; }
+
+.app-addOnOptionSetting {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+
+.app-addOnOptionSetting--title {
+  -ms-flex: 1;
+  flex: 1; }
+
+.app-addOnOptionSetting--value {
+  -ms-flex: 3;
+  flex: 3; }
+
+.app-addOnOptionSetting--note {
+  -ms-flex: 3;
+  flex: 3; }
+
+@media screen and (min-width: 768px) {
+  .app-addOnInfo, .app-addOnOptionSetting {
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center; } }

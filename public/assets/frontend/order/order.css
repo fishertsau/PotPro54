@@ -1,0 +1,36 @@
+.app-orderItem {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -ms-flex-pack: distribute;
+  justify-content: space-around; }
+  .app-orderItem form, .app-orderItem div, .app-orderItem p {
+    margin: 0; }
+
+.app-orderItem--title {
+  -ms-flex: 3;
+  flex: 3; }
+
+.app-orderItem--unitPrice {
+  -ms-flex: 2;
+  flex: 2; }
+
+.app-orderItem--subTotal {
+  -ms-flex: 5;
+  flex: 5; }
+
+.app-orderItem--qty {
+  -ms-flex: 3;
+  flex: 3; }
+
+@media screen and (min-width: 768px) {
+  .app-orderItem {
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center; } }
+
+/*# sourceMappingURL=order.css.map */

@@ -1,0 +1,91 @@
+/*-------Custom CSS ------*/
+.group-link {
+  position: absolute;
+  right: 5px;
+  bottom: 45px; }
+
+.product-link {
+  position: absolute;
+  right: 5px;
+  bottom: 70px; }
+
+/* ---------- Portfolio Css ---------- */
+.carousel-inner .item > img {
+  width: 100%; }
+
+.slider {
+  width: 100%; }
+
+/* ---------- Gallery Css Start ---------- */
+/* ---------- Portfolio images Css ---------- */
+.thumb_zoom img {
+  /* Safari and Chrome */
+  /* Firefox */
+  /* IE 9 */
+  /* Opera */
+  transition: all 1s ease; }
+
+/* ---------- Thumb Zoom images hover Css Start ---------- */
+.thumb_zoom img:hover {
+  /* Safari and Chrome */
+  /* Firefox */
+  /* IE 9 */
+  /* Opera */
+  transform: scale(1.45, 1.45);
+  opacity: .3; }
+
+/* ---------- //Thumb Zoom images hover Css End ---------- */
+/* ---------- Thumb Zoom  Css Start ---------- */
+.thumb_zoom {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0 !important;
+  margin: 5px; }
+
+/* ---------- //Thumb Zoom  Css End ---------- */
+/* ---------- Portfolio images Plus Icon Css Start ---------- */
+.fa-search-plus {
+  /*position: absolute;*/
+  z-index: 7;
+  top: 87px;
+  left: 120%;
+  right: 0;
+  color: #fff;
+  font-size: 17px !important;
+  background-color: #19a78d;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding-top: 6px;
+  padding-left: 8px;
+  opacity: 0.75; }
+
+/* ---------- //Portfolio images Plus Icon Css End ---------- */
+/* ---------- Portfolio images Link Icon Css Start ---------- */
+.fa-link {
+  /*position: absolute;*/
+  z-index: 7;
+  top: 87px;
+  left: 187%;
+  right: 0;
+  color: #fff;
+  font-size: 17px !important;
+  background-color: #01bc8c;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding-top: 6px;
+  padding-left: 8px;
+  opacity: 0.75; }
+
+/* ---------- //Portfolio images Link Icon Css End ---------- */
+/* ---------- //Portfolio images Icon Section End ---------- */
+@media (max-width: 900px) {
+  .fa-search-plus {
+    left: 60%; }
+  .fa-link {
+    left: 90%; } }
+
+/* _________ //Portfolio End _________ */
+
+/*# sourceMappingURL=group.css.map */

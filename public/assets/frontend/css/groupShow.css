@@ -1,0 +1,44 @@
+/* ---------- Thumb Zoom  Css Start ---------- */
+.thumb_zoom {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0 !important;
+  margin: 5px;
+  position: relative; }
+  .thumb_zoom img {
+    border: 1px solid lightgrey;
+    width: 100%;
+    min-height: 100px; }
+
+/* ---------- //Thumb Zoom  Css End ---------- */
+.product-link {
+  position: absolute;
+  right: 5px;
+  bottom: 70px; }
+
+/* ---------- Portfolio images Plus Icon Css Start ---------- */
+.fa-search-plus {
+  /*position: absolute;*/
+  z-index: 7;
+  top: 87px;
+  left: 120%;
+  right: 0;
+  color: #fff;
+  font-size: 17px !important;
+  background-color: #19a78d;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding-top: 6px;
+  padding-left: 8px;
+  opacity: 0.75; }
+
+/* ---------- //Portfolio images Plus Icon Css End ---------- */
+/* ---------- //Portfolio images Icon Section End ---------- */
+@media (max-width: 900px) {
+  .fa-search-plus {
+    left: 60%; } }
+
+/* _________ //Portfolio End _________ */
+
+/*# sourceMappingURL=groupShow.css.map */

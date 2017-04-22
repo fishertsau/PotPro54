@@ -1,0 +1,1 @@
+{"version":3,"sources":["cart.js"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA","file":"cart.js","sourcesContent":["function validateThis() {\n\n    return confirm('所有的資料與加工設定,將被刪除.\\n是否確定刪除?');\n\n}\n"],"sourceRoot":"/source/"}

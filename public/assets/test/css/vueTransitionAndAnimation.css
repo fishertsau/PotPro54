@@ -1,0 +1,19 @@
+div {
+    background: grey;
+    padding: 1em;
+}
+
+
+
+.animateShow{
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+/*.expand-transition {*/
+    /*transition: all .3s ease;*/
+/*}*/
+
+/*.expand-enter, .expand-leave {*/
+    /*opacity: 0;*/
+/*}*/
