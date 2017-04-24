@@ -21,18 +21,6 @@ class ProductRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function can_create_product()
-    {
-        $newProductInput = [
-            'title' => 'A new product'
-        ];
-
-        $product = $this->proRepo->create($newProductInput);
-        $this->assertEquals($newProductInput['title'], $product->title);
-        $this->assertCount(1, Product::all());
-    }
-
-    /** @test */
     public function can_update_product()
     {
         $product = factory(Product::class)->create([

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
+use Acme\Tool\Filterable\ProductFilter;
+use App;
 use App\Models\Product\Product;
 use App\Http\Controllers\Controller;
 use Acme\Repositories\ProductRepository;
+use Validator;
 
 class ProductController extends Controller
 {
@@ -17,6 +20,7 @@ class ProductController extends Controller
     /**
      * ProductController constructor.
      * @param ProductRepository $productRepository
+     * @param ProductFilter $filter
      */
     public function __construct(ProductRepository $productRepository)
     {
@@ -36,6 +40,16 @@ class ProductController extends Controller
      */
     public function store()
     {
+        $validator = Validator::make(request()->all(), [
+            'title' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('admin.products.create'))
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $product = $this->productRepo->create(request()->all());
         return redirect(route('admin.products.edit', $product->id));
     }
@@ -61,21 +75,14 @@ class ProductController extends Controller
     {
         return view('admin.product.product.index');
     }
+
+    public function getList()
+    {
+        return App::make(ProductFilter::class)->getList(request('queryTerm'));
+    }
 }
 
 
-
-
-//    /*** 查詢條件名稱***/
-//    protected static $queryTermName = 'productQueryTerm';
-
-//    /** 查詢條件**/
-//    protected static $queryTermList = [
-//        'status_flag' => true,
-//        'group_id' => '',
-//        'keyword_by' => '',
-//        'keyword' => ''
-//    ];
 
 //    public function __construct()
 //    {

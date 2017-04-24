@@ -30,7 +30,7 @@
                 <div class="panel-body">
                     @include('admin.partials.errors')
 
-                    {!! Form::model($group = new \App\Models\Group, ['method'=>'post','files'=>true,'action'=>'Admin\Product\GroupController@store']) !!}
+                    {!! Form::model($group = new \App\Models\Product\Group, ['method'=>'post','files'=>true,'action'=>'Admin\Product\GroupController@store']) !!}
 
                     <div class="form-horizontal">
                         @include('errors.list')
@@ -39,18 +39,20 @@
                         <div class="form-group">
                             <label for="" class="col-sm-2 control-label">主類別</label>
 
-                            <div class="col-sm-4">
-                                {!! Form::select('category', $categories,null, ['id'=>'category','class'=>'form-control']) !!}
-                            </div>
+                            {{--todo: implment this--}}
+                            {{--<div class="col-sm-4">--}}
+                                {{--{!! Form::select('category', $categories,null, ['id'=>'category','class'=>'form-control']) !!}--}}
+                            {{--</div>--}}
                         </div>
 
                         <!--子類別-->
                         <div class="form-group">
                             <label for="" class="col-sm-2 control-label">子類別</label>
 
-                            <div class="col-sm-4">
-                                {!! Form::select('group_sub_category_id',$subCategories ,null, ['id'=>'group_sub_category_id','class'=>'form-control']) !!}
-                            </div>
+                            {{-- todo: implement this --}}
+                            {{--<div class="col-sm-4">--}}
+                                {{--{!! Form::select('group_sub_category_id',$subCategories ,null, ['id'=>'group_sub_category_id','class'=>'form-control']) !!}--}}
+                            {{--</div>--}}
                         </div>
 
 

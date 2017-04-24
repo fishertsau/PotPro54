@@ -8,6 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $guarded = [];
+
+    public function scopeStatus($query, $status_flag)
+    {
+        if (is_bool($status_flag)) {
+            return $query->where('published', $status_flag);
+        }
+
+        return null;
+    }
+
+    public function scopeKeyword($query, $keyword = null)
+    {
+        if (!empty($keyword)) {
+            //add wildcard before and after keyword
+            $keyword = '%' . $keyword . '%';
+
+            return $query->where('title', 'like', $keyword);
+        }
+    }
+
 }
 
 
@@ -169,10 +189,7 @@ class Product extends Model
 //}
 //
 //
-//public function scopeStatusWithJoin($query, $status_flag)
-//{
-//    return $query->where('products.active', 'like', $status_flag);
-//}
+
 //
 //
 //public function scopeKeywordByWithJoin($query, $keyword_by, $keyword)

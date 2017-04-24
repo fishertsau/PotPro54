@@ -48,9 +48,23 @@ $factory->state(Video::class, 'active', function () {
 $factory->define(Product::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->title,
+        'price' => $faker->numberBetween(500, 50000),
+        'description'=>$faker->sentence
     ];
 });
 
+
+$factory->state(Product::class, 'published', function () {
+    return [
+        'published' => true
+    ];
+});
+
+$factory->state(Product::class, 'unpublished', function () {
+    return [
+        'published' => false
+    ];
+});
 
 
 

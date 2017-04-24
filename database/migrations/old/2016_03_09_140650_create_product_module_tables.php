@@ -47,38 +47,9 @@ class CreateProductModuleTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('groups', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->string('title');
-            $table->text('description');
-            $table->string('coverPhoto_path');
-
-            $table->string('slug')->nullable();
-
-            $table->string('note');
-            $table->char('good_at', 255);//�A�ήƲz
-            $table->smallInteger('rank');
-            $table->boolean('active');
-
-            $table->boolean('add_on_allowed'); //�O�_�i�H�[�u
-
-            $table->string('auxiliary');
-
-            $table->integer('group_sub_category_id')->unsigned();
-            $table->foreign('group_sub_category_id')
-                ->references('id')
-                ->on('group_sub_categories')
-                ->onDelete('cascade');
-
-            $table->timestamps();
-        });
-
-
 
         Schema::create('add_ons', function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('title');
             $table->text('body');
             $table->string('coverPhoto_path');
@@ -144,7 +115,6 @@ class CreateProductModuleTables extends Migration
         Schema::drop('add_on_options');
         Schema::drop('group_add_ons');
         Schema::drop('add_ons');
-        Schema::drop('groups');
         Schema::drop('group_sub_categories');
         Schema::drop('group_categories');
     }

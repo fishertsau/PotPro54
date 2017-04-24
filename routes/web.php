@@ -73,6 +73,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
     Route::group(['prefix' => 'product'], function () {
         //單一產品
         Route::get('products/{product}/edit', 'Admin\Product\ProductController@edit')->name('admin.products.edit');
+        Route::post('products/list', 'Admin\Product\ProductController@getList')->name('admin.products.list');
         Route::get('products/create', 'Admin\Product\ProductController@create')->name('admin.products.create');
         Route::put('products/{product}', 'Admin\Product\ProductController@update')->name('admin.products.update');
         Route::post('products', 'Admin\Product\ProductController@store')->name('admin.products.store');
@@ -81,12 +82,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 
 
 //        Route::get('/product/listExcel', ['as' => 'productExcelFile', 'uses' => 'Admin\Product\ProductController@makeExcelList']);
-//        Route::get('/product/list', 'Admin\Product\ProductController@makeList');
 //        Route::get('/product/{id}/delete', array('as' => 'admin.product.product.delete', 'uses' => 'Admin\Product\ProductController@getDelete'));
 //        Route::get('/product/{id}/confirm-delete', array('as' => 'admin.product.product.confirm-delete', 'uses' => 'Admin\Product\ProductController@getModalDelete'));
 
 
         //產品系列
+        Route::get('groups/{group}/edit', 'Admin\Product\GroupController@edit')->name('admin.groups.edit');
+        Route::get('groups/create', 'Admin\Product\GroupController@create')->name('admin.groups.create');
+        Route::post('groups', 'Admin\Product\GroupController@store')->name('admin.groups.store');
 //        Route::get('/group/production/setting/{group}', 'Admin\Product\GroupController@productionSetting');
 //        Route::patch('/group/production/setting/{group}', 'Admin\Product\GroupController@updateProductionSetting');
 //        Route::get('/group/list', 'Admin\Product\GroupController@makeList');
