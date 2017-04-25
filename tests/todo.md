@@ -1,9 +1,13 @@
 - High priority
- -- User Account Feature
+ -- User Account Feature (partly ok)
  -- Product (partly ok)
  -- Group (partly ok)
- -- Add On
+ 
+ 
  -- Add On Option
+ -- Add On
+  
+ 
  -- Cart
  -- Order
  -- Example

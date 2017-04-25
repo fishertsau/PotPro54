@@ -2,7 +2,7 @@
 /**
  * Model binding into route
  */
-Route::model('user', 'App\User');
+//Route::model('user', 'App\User');
 
 
 /**** 靜態內容 ****/
@@ -80,7 +80,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
         Route::get('products', 'Admin\Product\ProductController@index')->name('admin.products.index');
         Route::get('products/{product}', 'Admin\Product\ProductController@show')->name('admin.products.show');
 
-
 //        Route::get('/product/listExcel', ['as' => 'productExcelFile', 'uses' => 'Admin\Product\ProductController@makeExcelList']);
 //        Route::get('/product/{id}/delete', array('as' => 'admin.product.product.delete', 'uses' => 'Admin\Product\ProductController@getDelete'));
 //        Route::get('/product/{id}/confirm-delete', array('as' => 'admin.product.product.confirm-delete', 'uses' => 'Admin\Product\ProductController@getModalDelete'));
@@ -101,6 +100,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 //        Route::resource('/group', 'Admin\Product\GroupController');
 
         //加工配件
+//        Route::get('addons/{addon}/edit', 'Admin\Product\AddOnController@edit')->name('admin.addons.edit');
+        Route::get('addons/create', 'Admin\Product\AddOnController@create')->name('admin.addons.create');
+//        Route::post('addons', 'Admin\Product\AddOnController@store')->name('admin.addons.store');
+        Route::get('addons', 'Admin\Product\AddOnController@index')->name('admin.addons.index');
+//        Route::put('addons/{addon}', 'Admin\Product\AddOnController@update')->name('admin.addons.update');
+//        Route::get('addons/{addon}', 'Admin\Product\AddOnController@show')->name('admin.addons.show');
+
 //        Route::resource('/addOn', 'Admin\Product\AddOnController');
 
         //加工配件選項
@@ -109,6 +115,25 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 //        Route::get('/addOnOption/{id}/confirm-delete', array('as' => 'admin.product.addOnOption.confirm-delete', 'uses' => 'Admin\Product\AddOnOptionController@getModalDelete'));
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /******** 前台管理  frontEnd  API **********************/

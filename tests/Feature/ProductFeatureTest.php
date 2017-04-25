@@ -6,6 +6,10 @@ use Tests\TestCase;
 use App\Models\Product\Product;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
+
+/**
+ * @group product
+ * */
 class ProductFeatureTest extends TestCase
 {
     use DatabaseMigrations;

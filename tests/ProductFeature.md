@@ -7,7 +7,6 @@
  ok - See Detail
  
  - can not be delete
- - can be set if published
  - Dump to an Excel file
  - unpublished items could be not queried from frontend
  

@@ -7,6 +7,9 @@ use App\Models\Product\Group;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
+/**
+ *@group group
+ */
 class GroupFeatureTest extends TestCase
 {
     use DatabaseMigrations;
@@ -64,8 +67,6 @@ class GroupFeatureTest extends TestCase
     /** @test */
     public function group_could_be_updated_from_the_admin()
     {
-        $this->disableExceptionHandling();
-
         $group = factory(Group::class)->create([
             'title' => 'Old group title'
         ]);
@@ -86,8 +87,6 @@ class GroupFeatureTest extends TestCase
     /** @test */
     public function can_see_product_detail_from_admin()
     {
-        $this->disableExceptionHandling();
-
         $group = factory(Group::class)->create();
 
         $response = $this->get(route('admin.groups.show', $group->id));
