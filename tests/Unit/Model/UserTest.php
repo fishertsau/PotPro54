@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Unit;
 
-use App\Models\Marketing\Video;
 use App\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use App\Models\Marketing\Video;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 /**
  * @group  user

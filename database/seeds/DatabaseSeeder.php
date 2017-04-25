@@ -7,28 +7,28 @@ class DatabaseSeeder extends Seeder
 {
     private $tables = [
 
-        'tags',
-
-        'newss',
-
-        'group_categories',
-        'group_sub_categories',
-        'groups',
-        'products',
-
-        'add_ons',
-        'add_on_options',
+//        'tags',
+//
+//        'newss',
+//
+//        'group_categories',
+//        'group_sub_categories',
+//        'groups',
+//        'products',
+//
+//        'add_ons',
+//        'add_on_options',
         'users',
-        'talks',
-        'videos',
-        'examples',
-        'faqs',
-        'site_content',
-        'system_config',
-
-        'permissions',
-        'roles',
-        'orders'
+//        'talks',
+//        'videos',
+//        'examples',
+//        'faqs',
+//        'site_content',
+//        'system_config',
+//
+//        'permissions',
+//        'roles',
+//        'orders'
     ];
 
     /**
@@ -44,21 +44,21 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminSeeder::class);
         $this->call(UserTableSeeder::class);
 
-        $this->call(TagTableSeeder::class);
-
-        $this->call(SystemConfigTableSeeder::class);
-        $this->call(TalkTableSeeder::class);
-        $this->call(VideoTableSeeder::class);
-        $this->call(FaqTableSeeder::class);
-        $this->call(NewsTableSeeder::class);
-        $this->call(ExampleTableSeeder::class);
-//        $this->call(CategoryGroupProductTableSeeder::class);
-        $this->call(AddOnTableSeeder::class);
-        $this->call(AddOnOptionTableSeeder::class);
-        $this->call(SiteContentTableSeeder::class);
-
-        $this->call(PermissionTableSeeder::class);
-        $this->call(RoleTableSeeder::class);
+//        $this->call(TagTableSeeder::class);
+//
+//        $this->call(SystemConfigTableSeeder::class);
+//        $this->call(TalkTableSeeder::class);
+//        $this->call(VideoTableSeeder::class);
+//        $this->call(FaqTableSeeder::class);
+//        $this->call(NewsTableSeeder::class);
+//        $this->call(ExampleTableSeeder::class);
+////        $this->call(CategoryGroupProductTableSeeder::class);
+//        $this->call(AddOnTableSeeder::class);
+//        $this->call(AddOnOptionTableSeeder::class);
+//        $this->call(SiteContentTableSeeder::class);
+//
+//        $this->call(PermissionTableSeeder::class);
+//        $this->call(RoleTableSeeder::class);
 
         Model::reguard();
     }

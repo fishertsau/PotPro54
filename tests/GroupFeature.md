@@ -1,10 +1,10 @@
 # What should we do to a Group
-- Create
-- Edit
-- Update
-- Query 
-- list out
-- See Detail
+ok - Create
+ok - Edit
+ok - Update
+ok - Query 
+ok - list out
+ok - See Detail
 
 - Can not be deleted
 - can be set if published

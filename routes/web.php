@@ -90,6 +90,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
         Route::get('groups/{group}/edit', 'Admin\Product\GroupController@edit')->name('admin.groups.edit');
         Route::get('groups/create', 'Admin\Product\GroupController@create')->name('admin.groups.create');
         Route::post('groups', 'Admin\Product\GroupController@store')->name('admin.groups.store');
+        Route::get('groups', 'Admin\Product\GroupController@index')->name('admin.groups.index');
+        Route::put('groups/{group}', 'Admin\Product\GroupController@update')->name('admin.groups.update');
+        Route::get('groups/{group}', 'Admin\Product\GroupController@show')->name('admin.groups.show');
+        Route::post('groups/list', 'Admin\Product\GroupController@getList')->name('admin.groups.list');
+
 //        Route::get('/group/production/setting/{group}', 'Admin\Product\GroupController@productionSetting');
 //        Route::patch('/group/production/setting/{group}', 'Admin\Product\GroupController@updateProductionSetting');
 //        Route::get('/group/list', 'Admin\Product\GroupController@makeList');

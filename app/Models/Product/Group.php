@@ -11,9 +11,26 @@ class Group extends Model
 {
     protected $guarded = [];
 
+    public function scopeStatus($query, $status_flag)
+    {
+        if (is_bool($status_flag)) {
+            return $query->where('published', $status_flag);
+        }
+
+        return null;
+    }
+
+    public function scopeKeyword($query, $keyword = null)
+    {
+        if (!empty($keyword)) {
+            //add wildcard before and after keyword
+            $keyword = '%' . $keyword . '%';
+
+            return $query->where('title', 'like', $keyword);
+        }
+    }
+
 }
-
-
 
 //
 ////    use Sluggable;

@@ -2,16 +2,24 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
 use App\Models\Product\Group;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Tests\TestCase;
-use App\Models\Product\Product;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class GroupFeatureTest extends TestCase
 {
     use DatabaseMigrations;
     use WithoutMiddleware;
+
+    /** @test */
+    public function groups_could_be_listed_from_the_admin()
+    {
+        $response = $this->get(route('admin.groups.index'));
+
+        $response->assertSuccessful()
+            ->assertSee('系列清單');
+    }
 
     /** @test */
     public function group_create_page_could_be_visited_form_admin()
@@ -41,97 +49,89 @@ class GroupFeatureTest extends TestCase
 
 
     /** @test */
-//    public function product_edit_form_could_be_visited()
-//    {
-//        $this->disableExceptionHandling();
-//        $group = factory(Product::class)->create([
-//            'title' => 'Wonderful Product'
-//        ]);
-//
-//        $response = $this->get(route('admin.groups.edit', $product->id));
-//
-//        $response->assertSuccessful()
-//            ->assertSee('Wonderful Product');
-//    }
-//
-//
-//    /** @test */
-//    public function product_could_be_updated_from_the_admin()
-//    {
-//        $product = factory(Product::class)->create([
-//            'title' => 'Old product title'
-//        ]);
-//
-//        $updatedInfo = [
-//            'title' => 'new product title'
-//        ];
-//
-//        $response = $this->put(route('admin.products.update', $product->id), $updatedInfo);
-//
-//        $updatedProduct = $product->fresh();
-//        $response->assertRedirect(route('admin.products.index'));
-//        $this->assertEquals($product->id, $updatedProduct->id);
-//        $this->assertEquals($updatedInfo['title'], $updatedProduct->title);
-//    }
-//
-//
-//    /** @test */
-//    public function can_see_product_list_from_admin()
-//    {
-//        $response = $this->get(route('admin.products.index'));
-//
-//        $response->assertSuccessful()
-//            ->assertSee('產品清單');
-//    }
-//
-//    /** @test */
-//    public function can_see_product_detail_from_admin()
-//    {
-//        $product = factory(Product::class)->create();
-//
-//        $response = $this->get(route('admin.products.show', $product->id));
-//
-//        $response->assertSuccessful()
-//            ->assertSee($product->title);
-//    }
-//
-//
-//    /** @test */
-//    public function could_query_products_from_admin()
-//    {
-//        $publishedProductQty = random_int(5, 10);
-//        $unpublishedProductQty = random_int(5, 10);
-//
-//        factory(Product::class, $publishedProductQty)->states('published')->create([
-//            'title' => 'Super Product'
-//        ]);
-//        factory(Product::class, $unpublishedProductQty)->states('unpublished')->create([
-//            'title' => 'Super Product'
-//        ]);
-//
-//        //arrange
-//        $queryTerm = ['queryTerm' => [
-//            'published' => true,
-//            'keyword' => 'Super'
-//        ]];
-//
-//        //act
-//        $queryResult = $this->post(route('admin.products.list'), $queryTerm);
-//
-//        //assert
-//        $this->assertCount($publishedProductQty, $queryResult->json()['data']);
-//    }
-//
-//
-//    /** @test */
-//    public function title_is_required_to_create_a_new_product()
-//    {
-//        $newProductInput = [
-//        ];
-//
-//        $response = $this->post(route('admin.products.store'), $newProductInput);
-//
-//        $response->assertStatus(302)
-//            ->assertRedirect(route('admin.products.create'));
-//    }
+    public function group_edit_form_could_be_visited_from_admin()
+    {
+        $group = factory(Group::class)->create([
+            'title' => 'Wonderful Group'
+        ]);
+
+        $response = $this->get(route('admin.groups.edit', $group->id));
+
+        $response->assertSuccessful()
+            ->assertSee('Wonderful Group');
+    }
+
+    /** @test */
+    public function group_could_be_updated_from_the_admin()
+    {
+        $this->disableExceptionHandling();
+
+        $group = factory(Group::class)->create([
+            'title' => 'Old group title'
+        ]);
+
+        $updatedInfo = [
+            'title' => 'new group title'
+        ];
+
+        $response = $this->put(route('admin.groups.update', $group->id), $updatedInfo);
+
+        $updatedGroup = $group->fresh();
+        $response->assertRedirect(route('admin.groups.index'));
+        $this->assertEquals($group->id, $updatedGroup->id);
+        $this->assertEquals($updatedInfo['title'], $updatedGroup->title);
+    }
+
+
+    /** @test */
+    public function can_see_product_detail_from_admin()
+    {
+        $this->disableExceptionHandling();
+
+        $group = factory(Group::class)->create();
+
+        $response = $this->get(route('admin.groups.show', $group->id));
+
+        $response->assertSuccessful()
+            ->assertSee($group->title);
+    }
+
+
+    /** @test */
+    public function could_query_groups_from_admin()
+    {
+        $publishedGroupQty = random_int(5, 10);
+        $unpublishedGroupQty = random_int(5, 10);
+
+        factory(Group::class, $publishedGroupQty)->states('published')->create([
+            'title' => 'Super Group'
+        ]);
+        factory(Group::class, $unpublishedGroupQty)->states('unpublished')->create([
+            'title' => 'Super Group'
+        ]);
+
+        //arrange
+        $queryTerm = ['queryTerm' => [
+            'published' => true,
+            'keyword' => 'Super'
+        ]];
+
+        //act
+        $queryResult = $this->post(route('admin.groups.list'), $queryTerm);
+
+        //assert
+        $this->assertCount($publishedGroupQty, $queryResult->json()['data']);
+    }
+
+    /** @test */
+    public function title_is_required_to_create_a_new_group()
+    {
+        $newGroupInput = [
+        ];
+
+        $response = $this->post(route('admin.groups.store'), $newGroupInput);
+
+        $response->assertStatus(302)
+            ->assertRedirect(route('admin.groups.create'));
+    }
 }

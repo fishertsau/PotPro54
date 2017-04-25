@@ -202,7 +202,7 @@
     @endcan
 
 
-    @can('product-management')
+    {{--@can('product-management')--}}
         {{--產品管理--}}
         <li {!! ( Request::is('admin/product/group') || Request::is('admin/product/group/*') ||
             Request::is('admin/product/product') || Request::is('admin/product/product/*')
@@ -222,16 +222,16 @@
                     </a>
                 </li>
                 <li {!! (Request::is('admin/product/product') || Request::is('admin/product/product/*') ? 'class="active" id="active"' : '') !!}>
-                    <a href="{{ URL::to('admin/product/product') }}">
+                    <a href="{{ route('admin.products.index') }}">
                         <i class="fa fa-angle-double-right"></i>
                         單一產品
                     </a>
                 </li>
             </ul>
         </li>
-    @endcan
+    {{--@endcan--}}
 
-    @can('production-config')
+    {{--@can('production-config')--}}
         {{--生產設定--}}
         <li {!! ( Request::is('admin/product/production/group/setting')||
             Request::is('admin/product/addOn') || Request::is('admin/product/addOn/*') ||
@@ -260,7 +260,7 @@
                 </li>
             </ul>
         </li>
-    @endcan
+    {{--@endcan--}}
 
 
     @can('user-management')
@@ -310,7 +310,8 @@
 
 
     @if(Auth::check())
-        @if(Auth::user()->isSuperAdmin())
+        {{--todo: to implement if  super admin check is necessary --}}
+        {{--@if(Auth::user()->isSuperAdmin())--}}
             {{--權限管理--}}
             <li {!! (Request::is('admin/permission') || Request::is('admin/permission/create') || Request::is('admin/permission/*') ? 'class="active"' : '') !!}>
                 <a href="#">
@@ -334,6 +335,6 @@
                     </li>
                 </ul>
             </li>
-        @endif
+        {{--@endif--}}
     @endif
 </ul>

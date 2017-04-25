@@ -45,81 +45,84 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($group->add_ons as $add_on)
-                                <tr>
-                                    <td> {!! Form::checkbox('chosen[]',true) !!}</td>
-                                    <td>{{$add_on->title}}</td>
-                                    <td>@if($add_on->quantity_change_allowed)
-                                            <input type="number" class="form-control" placeholder="單位數量">
-                                        @else
-                                            <p class="static-control">1</p>
-                                        @endif
-                                    </td>
-                                    <td>Note</td>
-                                    <td>
-                                        <button>show</button>&nbsp;&nbsp;
-                                        <button>hide</button>
-                                    </td>
-                                </tr>
-                                <tr style="display: none">
-                                    <td colspan="5">
-                                        <div class="form-horizontal">
-                                            <!--主要圖片-->
-                                            <div class="form-group">
-                                                {!! Form::label('', '配件圖示',['class'=>'col-sm-2 control-label']) !!}
-                                                <div class="col-sm-8">
-                                                    <img src="{{URL::asset('assets/images/cover')}}/{{ $add_on->coverPhoto_path=='' ? 'coverPhoto.jpg' : $add_on->coverPhoto_path}}"
-                                                         style="width: 80%">
+                            @if(isset($group->add_ons))
+                                @foreach($group->add_ons as $add_on)
+                                    <tr>
+                                        <td> {!! Form::checkbox('chosen[]',true) !!}</td>
+                                        <td>{{$add_on->title}}</td>
+                                        <td>@if($add_on->quantity_change_allowed)
+                                                <input type="number" class="form-control" placeholder="單位數量">
+                                            @else
+                                                <p class="static-control">1</p>
+                                            @endif
+                                        </td>
+                                        <td>Note</td>
+                                        <td>
+                                            <button>show</button>&nbsp;&nbsp;
+                                            <button>hide</button>
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none">
+                                        <td colspan="5">
+                                            <div class="form-horizontal">
+                                                <!--主要圖片-->
+                                                <div class="form-group">
+                                                    {!! Form::label('', '配件圖示',['class'=>'col-sm-2 control-label']) !!}
+                                                    <div class="col-sm-8">
+                                                        <img src="{{URL::asset('assets/images/cover')}}/{{ $add_on->coverPhoto_path=='' ? 'coverPhoto.jpg' : $add_on->coverPhoto_path}}"
+                                                             style="width: 80%">
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <table class="full-width table table-bordered">
-                                                <thead>
-                                                <tr>
-                                                    <th style="width:8%" class="text-center">選擇</th>
-                                                    <th style="width:8%" class="text-center">編號</th>
-                                                    <th style="width:20%" class="text-center">加工選項</th>
-                                                    <th style="width:30%" class="text-center">設定</th>
-                                                    <th style="width:24%" class="text-center">附註</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($add_on->options as $option)
+                                                <table class="full-width table table-bordered">
+                                                    <thead>
                                                     <tr>
-                                                        <td class="text-center">
-                                                            @if($option->pivot->optionable)
-                                                                <input type="checkbox" name="" value="">
-                                                            @else
-                                                                <p>-</p>
-                                                            @endif
-                                                        </td>
-                                                        <td class="text-center">{{$option->pivot->no}}</td>
-                                                        <td class="text-center">{{$option->title}}</td>
-                                                        <td>
-                                                            @if($option->quantity_change_allowed)
-                                                                <div class="input-group input-group-sm">
-                                                                    <input type="number" class="form-control"
-                                                                           placeholder="數量">
-                                                        <span class="input-group-addon"
-                                                              style="font-size: small">{{$option->settings_array[0]}}</span>
-                                                                </div>
-                                                            @else
-                                                                @foreach($option->settings_array as $setting)
-                                                                    <input type="radio" name="{{$option->title}}"
-                                                                           value="{{$setting}}"> {{$setting}}
-                                                                @endforeach
-                                                            @endif
-                                                        </td>
-                                                        <td><input type="text" placeholder="附註" class="form-control">
-                                                        </td>
+                                                        <th style="width:8%" class="text-center">選擇</th>
+                                                        <th style="width:8%" class="text-center">編號</th>
+                                                        <th style="width:20%" class="text-center">加工選項</th>
+                                                        <th style="width:30%" class="text-center">設定</th>
+                                                        <th style="width:24%" class="text-center">附註</th>
                                                     </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($add_on->options as $option)
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                @if($option->pivot->optionable)
+                                                                    <input type="checkbox" name="" value="">
+                                                                @else
+                                                                    <p>-</p>
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-center">{{$option->pivot->no}}</td>
+                                                            <td class="text-center">{{$option->title}}</td>
+                                                            <td>
+                                                                @if($option->quantity_change_allowed)
+                                                                    <div class="input-group input-group-sm">
+                                                                        <input type="number" class="form-control"
+                                                                               placeholder="數量">
+                                                                        <span class="input-group-addon"
+                                                                              style="font-size: small">{{$option->settings_array[0]}}</span>
+                                                                    </div>
+                                                                @else
+                                                                    @foreach($option->settings_array as $setting)
+                                                                        <input type="radio" name="{{$option->title}}"
+                                                                               value="{{$setting}}"> {{$setting}}
+                                                                    @endforeach
+                                                                @endif
+                                                            </td>
+                                                            <td><input type="text" placeholder="附註"
+                                                                       class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                         </table>
                     </div>

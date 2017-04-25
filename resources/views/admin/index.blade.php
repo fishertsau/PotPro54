@@ -11,7 +11,7 @@
 @section('content')
 
     <section class="content-header">
-        <h1>{{$company_name}}管理系統</h1>
+        <h1>御鼎節能科技管理系統</h1>
         <ol class="breadcrumb">
             <li class="active">
                 <a href="#">

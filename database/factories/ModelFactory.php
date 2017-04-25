@@ -4,6 +4,7 @@ use App\Models\Example\Example;
 use App\Models\Marketing\Video;
 use App\Models\Product\AddOn;
 use App\Models\Product\AddOnOption;
+use App\Models\Product\Group;
 use App\Models\Product\GroupCategory;
 use App\Models\Product\GroupSubCategory;
 use App\Models\Product\Product;
@@ -49,7 +50,7 @@ $factory->define(Product::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->title,
         'price' => $faker->numberBetween(500, 50000),
-        'description'=>$faker->sentence
+        'description' => $faker->sentence
     ];
 });
 
@@ -61,6 +62,26 @@ $factory->state(Product::class, 'published', function () {
 });
 
 $factory->state(Product::class, 'unpublished', function () {
+    return [
+        'published' => false
+    ];
+});
+
+
+$factory->define(Group::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->title,
+    ];
+});
+
+
+$factory->state(Group::class, 'published', function () {
+    return [
+        'published' => true
+    ];
+});
+
+$factory->state(Group::class, 'unpublished', function () {
     return [
         'published' => false
     ];

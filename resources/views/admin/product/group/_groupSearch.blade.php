@@ -7,12 +7,13 @@
     <div class="form-group">
         <select name="category" id="category" title="請選擇類別" class="form-control" style="color: black;">
             <option value="">主類別</option>
-            @foreach($categories  as $category=>$title )
-                <option value="{{$category}}"
-                        {{($queryTerm['category']==$category)?'selected':''}}>
-                    {{$title}}
-                </option>
-            @endforeach
+            {{--todo: implement category search --}}
+            {{--@foreach($categories  as $category=>$title )--}}
+                {{--<option value="{{$category}}"--}}
+                        {{--{{($queryTerm['category']==$category)?'selected':''}}>--}}
+                    {{--{{$title}}--}}
+                {{--</option>--}}
+            {{--@endforeach--}}
         </select>
     </div>
 
@@ -25,16 +26,18 @@
     <div class="form-group">
         <select name="status_flag" class="form-control" id="status_flag" style="color: black;">
             <option value="">所有</option>
-            <option value="1" {{($queryTerm['status_flag']==1)?'selected':''}}>上架</option>
-            <option value="0" {{($queryTerm['status_flag']==0)?'selected':''}}>下架</option>
+            {{--todo: implement queryTerm --}}
+            {{--<option value="1" {{($queryTerm['status_flag']==1)?'selected':''}}>上架</option>--}}
+            {{--<option value="0" {{($queryTerm['status_flag']==0)?'selected':''}}>下架</option>--}}
         </select>
     </div>
 
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="名稱" name="keyword"
-                @if(isset($queryTerm['keyword']) && !$queryTerm['keyword']=='%')
-                value="{{$queryTerm['keyword']}}"
-                @endif>
+        {{--todo: implement queryTerm--}}
+        {{--<input type="text" class="form-control" placeholder="名稱" name="keyword"--}}
+                {{--@if(isset($queryTerm['keyword']) && !$queryTerm['keyword']=='%')--}}
+                {{--value="{{$queryTerm['keyword']}}"--}}
+                {{--@endif>--}}
     </div>
     <button type="submit" class="btn btn-warning">搜尋</button>
 </form>

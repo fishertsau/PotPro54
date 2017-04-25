@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
+use Acme\Tool\Filterable\GroupFilter;
+use App;
 use Gate;
 use Session;
 use Illuminate\Http\Request;
 use App\Models\Product\Group;
 use App\Http\Requests\GroupRequest;
 use App\Http\Controllers\Controller;
+use Validator;
 
 class GroupController extends Controller
 {
+
+    public function index()
+    {
+        return view('admin.product.group.index');
+    }
 
     public function create()
     {
@@ -19,9 +27,45 @@ class GroupController extends Controller
 
     public function store()
     {
+        $validator = Validator::make(request()->all(), [
+            'title' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('admin.groups.create'))
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $group = Group::create(request()->all());
 
         return redirect(route('admin.groups.edit', $group->id));
+    }
+
+
+    public function edit($groupId)
+    {
+        $group = Group::findOrFail($groupId);
+        return view('admin.product.group.edit', compact('group'));
+    }
+
+
+    public function update($groupId)
+    {
+        $group = Group::findOrFail($groupId);
+        $group->update(request()->all());
+        return redirect(route('admin.groups.index'));
+    }
+
+    public function show($groupId)
+    {
+        $group = Group::findOrFail($groupId);
+        return view('admin.product.group.show', compact('group'));
+    }
+
+    public function getList()
+    {
+        return App::make(GroupFilter::class)->getList(request('queryTerm'));
     }
 
 }
