@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 /**
  *@group group
  */
-class GroupFeatureTest extends TestCase
+class GroupTest extends TestCase
 {
     use DatabaseMigrations;
     use WithoutMiddleware;

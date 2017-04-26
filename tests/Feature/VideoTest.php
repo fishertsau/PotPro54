@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 /**
  * @group video
  */
-class VideoFeatureTest extends TestCase
+class VideoTest extends TestCase
 {
     use DatabaseMigrations;
     use WithoutMiddleware;

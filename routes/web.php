@@ -100,12 +100,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 //        Route::resource('/group', 'Admin\Product\GroupController');
 
         //加工配件
-//        Route::get('addons/{addon}/edit', 'Admin\Product\AddOnController@edit')->name('admin.addons.edit');
+        Route::get('addons/{addon}/edit', 'Admin\Product\AddOnController@edit')->name('admin.addons.edit');
         Route::get('addons/create', 'Admin\Product\AddOnController@create')->name('admin.addons.create');
-//        Route::post('addons', 'Admin\Product\AddOnController@store')->name('admin.addons.store');
+        Route::post('addons', 'Admin\Product\AddOnController@store')->name('admin.addons.store');
         Route::get('addons', 'Admin\Product\AddOnController@index')->name('admin.addons.index');
-//        Route::put('addons/{addon}', 'Admin\Product\AddOnController@update')->name('admin.addons.update');
-//        Route::get('addons/{addon}', 'Admin\Product\AddOnController@show')->name('admin.addons.show');
+        Route::put('addons/{addon}', 'Admin\Product\AddOnController@update')->name('admin.addons.update');
+        Route::get('addons/{addon}', 'Admin\Product\AddOnController@show')->name('admin.addons.show');
 
 //        Route::resource('/addOn', 'Admin\Product\AddOnController');
 

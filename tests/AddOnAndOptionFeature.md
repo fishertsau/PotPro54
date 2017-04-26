@@ -1,10 +1,10 @@
 # What should we do to Add on?
-- Create page
-- Store
-- Edit page
-- Update
-- List view
-- See Detail
+ok - Create page
+ok - Store
+ok - Edit page
+ok - Update
+ok - List view
+ok - See Detail
 
 
 - Can not be deleted

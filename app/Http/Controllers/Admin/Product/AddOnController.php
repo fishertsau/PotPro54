@@ -15,6 +15,41 @@ class AddOnController extends Controller
         return view('admin.product.addon.index');
     }
 
+    public function create()
+    {
+        return view('admin.product.addon.create');
+    }
+
+    public function store()
+    {
+        $addon = AddOn::create(request()->all());
+
+        return redirect(route('admin.addons.edit', $addon->id));
+    }
+
+    public function edit($addOnId)
+    {
+        $add_on = AddOn::findOrFail($addOnId);
+
+        return view('admin.product.addon.edit', compact('add_on'));
+    }
+
+
+    public function update($addOnId)
+    {
+        $addOn = AddOn::findOrFail($addOnId);
+
+        $addOn->update(request()->all());
+
+        return redirect(route('admin.addons.index'));
+    }
+
+    public function show($id)
+    {
+        $add_on = AddOn::findOrFail($id);
+
+        return view('admin.product.addon.show', compact('add_on'));
+    }
 }
 
 

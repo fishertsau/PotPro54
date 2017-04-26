@@ -12,8 +12,11 @@
                required>
     </td>
     <td>
+        {{--todo: implement this--}}
+{{--
         {!! Form::select('add_on_option_id[]', $add_on_option_list, ($newItem) ? '' : $selected_option->pivot->add_on_option_id ,
         ['class'=>'add-on-option-input add-on-option-selection form-control','onChange'=>'updateSetting(this,"add-on-option");']) !!}
+--}}
     </td>
     <td class="text-left">
         <p class="add-on-option-setting add-on-option-text">

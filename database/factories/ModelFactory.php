@@ -89,6 +89,13 @@ $factory->state(Group::class, 'unpublished', function () {
 
 
 
+$factory->define(AddOn::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->title,
+    ];
+});
+
+
 //$factory->define(Talk::class, function (Faker\Generator $faker) {
 //    return [
 //        'title' => $faker->sentence,

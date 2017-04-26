@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 
-class HomePageTest extends TestCase
+class HomePage extends TestCase
 {
     /**
      * A basic test example.
