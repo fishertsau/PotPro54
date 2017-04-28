@@ -35,7 +35,7 @@ class OrderRepository extends Filterable
     }
 
 
-    /**  Order Decision***/
+    /**  order Decision***/
     /**  (1)newOrder (2)reject (3)on-hold (4)cancel (5)accept **/
 
     public function create(User $buyer, User $entry_person, array $orderInfo)

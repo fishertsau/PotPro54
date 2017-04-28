@@ -9,11 +9,11 @@ use Carbon\Carbon;
 use App\Events\User\SignedIn;
 //use App\Listeners\User\StampSignedIn;
 
-//use Illuminate\Auth\Events\Registered;
+//use Illuminate\Auth\events\Registered;
 //use App\Listeners\User\WelcomeEmail;
 
-//use App\Events\User\UserEmailChanged;
-//use App\Events\User\ConfirmationEmailRequested;
+//use App\events\User\UserEmailChanged;
+//use App\events\User\ConfirmationEmailRequested;
 //use App\Listeners\User\ConfirmationEmail;
 //
 use Illuminate\Foundation\Testing\DatabaseMigrations;

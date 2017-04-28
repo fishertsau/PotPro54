@@ -7,7 +7,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class AddOnOptionTestTest extends TestCase
 {
-
     use DatabaseMigrations;
 
     /** @test */

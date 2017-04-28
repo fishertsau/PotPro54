@@ -36,3 +36,9 @@ ok - Detail view
 - Can not be deleted
 - Content change should be recorded
 - Can set if quantity setting is allowed
+
+
+加工配件
+- 可設定數量
+- 有加工選項: 編號 是否選配
+- 說明欄位

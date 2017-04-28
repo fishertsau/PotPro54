@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Product\Product;
 use App\Http\Controllers\Controller;
 
-class CartController extends Controller
+class ProductOrderController extends Controller
 {
     protected $user;
 

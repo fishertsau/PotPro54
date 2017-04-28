@@ -19,7 +19,7 @@ class OrderShipment extends Model
     protected $dates = ['shipped_at'];
 
     /**
-     * setup the relationship between Order and OrderShipment.
+     * setup the relationship between order and OrderShipment.
      * @retrun App\Category;
      */
     public function order()

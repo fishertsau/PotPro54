@@ -6901,7 +6901,7 @@ namespace Illuminate\Support\Facades {
          * flexibility in controllers, it is better to explicitly get request parameters from the appropriate
          * public property instead (attributes, query, request).
          * 
-         * Order of precedence: PATH (routing placeholders or custom attributes), GET, BODY
+         * order of precedence: PATH (routing placeholders or custom attributes), GET, BODY
          *
          * @param string $key the key
          * @param mixed $default the default value if the parameter key does not exist

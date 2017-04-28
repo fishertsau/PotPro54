@@ -80,7 +80,7 @@ class AuthController extends Controller
 
     /*Socialite Login*/
     /**
-     * Redirect the user to the Social Service authentication page.
+     * Redirect the user to the Social service authentication page.
      *
      * @param AuthenticateUser $authenticateUser
      * @param Request $request

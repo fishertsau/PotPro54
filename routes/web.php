@@ -1,6 +1,6 @@
 <?php
 /**
- * Model binding into route
+ * model binding into route
  */
 //Route::model('user', 'App\User');
 
@@ -124,11 +124,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 
 
 
+/**** 購物車管理 ****/
+Route::group(['middleware' => ['web']],function(){
+//    Route::post('cart', 'FrontEnd\Cart\CartController@addItem');
+//    Route::get('cart', 'FrontEnd\Cart\CartController@index');
+//    Route::post('cart/{cart}/edit', 'FrontEnd\Cart\CartController@update');
+//    Route::post('cart/{cart}/delete', 'FrontEnd\Cart\CartController@destroy');
+});
 
 
 
 
 
+
+
+
+
+/**** 訂單管理 ****/
 
 
 
@@ -154,11 +166,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('sales/example', 'FrontEnd\Sales\SalesExampleController');
     Route::resource('sales', 'FrontEnd\Sales\SalesAccountController');
 
-    //購物車與控制
-    Route::post('cart', 'FrontEnd\Cart\CartController@addItem');
-    Route::get('cart', 'FrontEnd\Cart\CartController@index');
-    Route::post('cart/{cart}/edit', 'FrontEnd\Cart\CartController@update');
-    Route::post('cart/{cart}/delete', 'FrontEnd\Cart\CartController@destroy');
 
 
     //訂單與控制

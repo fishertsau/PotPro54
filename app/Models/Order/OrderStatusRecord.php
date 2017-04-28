@@ -18,8 +18,8 @@ class OrderStatusRecord extends Model
     public $timestamps = false;
 
     /**
-     * setup the relationship between Order and Order Status Record.
-     * @retrun App\Models\Order\Order;
+     * setup the relationship between order and order Status Record.
+     * @retrun App\Models\order\order;
      */
     public function order()
     {

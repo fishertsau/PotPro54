@@ -27,7 +27,7 @@ class OrderItem extends Model
     ];
 
     /**
-     * setup the relationship between Order and OrderItem.
+     * setup the relationship between order and OrderItem.
      * @retrun App\Category;
      */
     public function order()
@@ -36,7 +36,7 @@ class OrderItem extends Model
     }
 
     /**
-     * setup the relationship between Order shipment and  Recorder.
+     * setup the relationship between order shipment and  Recorder.
      * @retrun App\User;
      */
     public function recorder()

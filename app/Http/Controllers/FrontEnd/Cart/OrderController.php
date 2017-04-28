@@ -11,7 +11,7 @@ class OrderController extends OrderRepository
 {
     protected $cartController;
 
-    public function __construct(CartController $cartController)
+    public function __construct(ProductOrderController $cartController)
     {
         $this->middleware('auth');
         $this->middleware('activatedSales');

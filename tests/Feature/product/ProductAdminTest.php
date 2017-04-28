@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 /**
  * @group product
  * */
-class ProductTest extends TestCase
+class ProductAdminTest extends TestCase
 {
     use DatabaseMigrations;
 

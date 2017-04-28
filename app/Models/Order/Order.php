@@ -135,7 +135,7 @@ class Order extends Model
     }
 
     /**
-     * setup the relationship between Order and  OrderStatusRecord
+     * setup the relationship between order and  OrderStatusRecord
      * @retrun App\User;
      */
     public function auditRecords()

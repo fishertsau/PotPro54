@@ -7316,8 +7316,8 @@ S2.define('select2/core',[
   };
 
   /**
-   * Override the trigger method to automatically trigger pre-Events when
-   * there are Events that can be prevented.
+   * Override the trigger method to automatically trigger pre-events when
+   * there are events that can be prevented.
    */
   Select2.prototype.trigger = function (name, args) {
     var actualTrigger = Select2.__super__.trigger;

@@ -9,7 +9,7 @@
 
 
     <div class="panel-body" style="display: flex">
-        {{--When Order: (1)normal, (2)in 'audit' phase, (3)needs TBP--}}
+        {{--When order: (1)normal, (2)in 'audit' phase, (3)needs TBP--}}
         @if(($order->status_flag=='n')
         &($order->phase=='a')
         &($order->phase_status_flag=='t'))

@@ -1,15 +1,19 @@
 - High priority
- -- User Account Feature (partly ok)
- -- Product (partly ok)
- -- Group (partly ok)
+    - User Account Feature (partly ok)
+    - Product (partly ok)
+    - Group (partly ok)
  
  
- -- Add On Option
- -- Add On
+   - Add On Option (partly ok)
+   - Add On (partly ok)
   
  
- -- Cart
- -- Order
+   - Purchase Product 
+        - Cart
+        - Order
+
+
+
  -- Example
  -- Add POST/contactUs test
  -- Video Default Value test

@@ -2155,9 +2155,9 @@ config._assetTypes.forEach(function (type) {
 });
 
 /**
- * Events & Watchers.
+ * events & Watchers.
  *
- * Events & watchers hashes should not overwrite one
+ * events & watchers hashes should not overwrite one
  * another, so we merge them as arrays.
  */
 
@@ -2429,7 +2429,7 @@ var arrayProto = Array.prototype;
 var arrayMethods = Object.create(arrayProto)
 
 /**
- * Intercept mutating methods and emit Events
+ * Intercept mutating methods and emit events
  */
 
 ;['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse'].forEach(function (method) {
@@ -2569,7 +2569,7 @@ Observer.prototype.observeArray = function (items) {
 
 /**
  * Convert a property into getter/setter so we can emit
- * the Events when the property is accessed/changed.
+ * the events when the property is accessed/changed.
  *
  * @param {String} key
  * @param {*} val
@@ -2824,7 +2824,7 @@ function initMixin (Vue) {
     // a flag to avoid this being observed
     this._isVue = true;
 
-    // Events bookkeeping
+    // events bookkeeping
     this._events = {}; // registered callbacks
     this._eventsCount = {}; // for $broadcast optimization
 
@@ -2881,7 +2881,7 @@ function initMixin (Vue) {
     // initialize data observation and scope inheritance.
     this._initState();
 
-    // setup event system and option Events.
+    // setup event system and option events.
     this._initEvents();
 
     // call created hook
@@ -2999,7 +2999,7 @@ function getPathCharType(ch) {
     case 0x0A: // Newline
     case 0x0D: // Return
     case 0xA0: // No-break space
-    case 0xFEFF: // Byte Order Mark
+    case 0xFEFF: // Byte order Mark
     case 0x2028: // Line Separator
     case 0x2029:
       // Paragraph Separator
@@ -3880,7 +3880,7 @@ map.option = map.optgroup = [1, '<select multiple="multiple">', '</select>'];
 
 map.thead = map.tbody = map.colgroup = map.caption = map.tfoot = [1, '<table>', '</table>'];
 
-map.g = map.defs = map.symbol = map.use = map.image = map.text = map.circle = map.ellipse = map.line = map.path = map.polygon = map.polyline = map.rect = [1, '<svg ' + 'xmlns="http://www.w3.org/2000/svg" ' + 'xmlns:xlink="http://www.w3.org/1999/xlink" ' + 'xmlns:ev="http://www.w3.org/2001/xml-Events"' + 'version="1.1">', '</svg>'];
+map.g = map.defs = map.symbol = map.use = map.image = map.text = map.circle = map.ellipse = map.line = map.path = map.polygon = map.polyline = map.rect = [1, '<svg ' + 'xmlns="http://www.w3.org/2000/svg" ' + 'xmlns:xlink="http://www.w3.org/1999/xlink" ' + 'xmlns:ev="http://www.w3.org/2001/xml-events"' + 'version="1.1">', '</svg>'];
 
 /**
  * Check if a node is a supported template node with a
@@ -3962,7 +3962,7 @@ function nodeToFragment(node) {
   // if its a template tag and the browser supports it,
   // its content is already a document fragment. However, iOS Safari has
   // bug when using directly cloned template content with touch
-  // Events and can cause crashes when the nodes are removed from DOM, so we
+  // events and can cause crashes when the nodes are removed from DOM, so we
   // have to treat template elements as string templates. (#2805)
   /* istanbul ignore if */
   if (isRealTemplate(node)) {
@@ -5126,11 +5126,11 @@ var text$2 = {
     var number = this.params.number;
     var debounce = this.params.debounce;
 
-    // handle composition Events.
+    // handle composition events.
     //   http://blog.evanyou.me/2014/01/03/composition-event/
     // skip this for Android because it handles composition
-    // Events quite differently. Android doesn't trigger
-    // composition Events for language input methods e.g.
+    // events quite differently. Android doesn't trigger
+    // composition events for language input methods e.g.
     // Chinese, but instead triggers them for spelling
     // suggestions... (see Discussion/#162)
     var composing = false;
@@ -5188,8 +5188,8 @@ var text$2 = {
       this.listener = _debounce(this.listener, debounce);
     }
 
-    // Support jQuery Events, since jQuery.trigger() doesn't
-    // trigger native Events in some cases and some plugins
+    // Support jQuery events, since jQuery.trigger() doesn't
+    // trigger native events in some cases and some plugins
     // rely on $.trigger()
     //
     // We want to make sure if a listener is attached using
@@ -7171,7 +7171,7 @@ p$1.getCssTransitionType = function (className) {
   /* istanbul ignore if */
   if (!transitionEndEvent ||
   // skip CSS transitions if page is not visible -
-  // this solves the issue of transitionend Events not
+  // this solves the issue of transitionend events not
   // firing until the page is visible again.
   // pageVisibility API is supported in IE10+, same as
   // CSS transitions.
@@ -8498,7 +8498,7 @@ var eventRE = /^v-on:|^@/;
 
 function eventsMixin (Vue) {
   /**
-   * Setup the instance's option Events & watchers.
+   * Setup the instance's option events & watchers.
    * If the value is a string, we pull it from the
    * instance's methods by name.
    */
@@ -8513,7 +8513,7 @@ function eventsMixin (Vue) {
   };
 
   /**
-   * Register v-on Events on a child component
+   * Register v-on events on a child component
    *
    * @param {Vue} vm
    * @param {Element} el
@@ -8541,7 +8541,7 @@ function eventsMixin (Vue) {
   }
 
   /**
-   * Register callbacks for option Events and watchers.
+   * Register callbacks for option events and watchers.
    *
    * @param {Vue} vm
    * @param {String} action

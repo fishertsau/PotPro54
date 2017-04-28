@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use Acme\Order\Cart;
+use Illuminate\Support\ServiceProvider;
+
+
 use Acme\Auth\LaravelSocialiteGateway;
 use Acme\Auth\SocialiteGateway;
 use App\Models\Tag;
@@ -12,7 +16,7 @@ use App\Models\Product\Group;
 use App\Models\Authorization\Role;
 use App\Models\Product\AddOnOption;
 use App\Models\Product\GroupCategory;
-use Illuminate\Support\ServiceProvider;
+
 use App\Models\Product\GroupSubCategory;
 use App\Models\Authorization\Permission;
 use App\Http\Controllers\Admin\NewsController;
@@ -36,33 +40,21 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      *view()->composer(['admin.layouts.default'], function ($view) {
-    $view->with('left_menu_show', session('left_menu_show'));
-    });
+     * $view->with('left_menu_show', session('left_menu_show'));
+     * });
      * @return void
      */
     public function register()
     {
+        $this->app->singleton('cart', function () {
+            return new Cart;
+        });
+
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ///***  Left Menu Show 設定***/

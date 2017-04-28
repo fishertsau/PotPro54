@@ -3466,7 +3466,7 @@
             // If there are functions bound, to execute
             readyList.resolveWith( document, [ jQuery ] );
 
-            // Trigger any bound ready Events
+            // Trigger any bound ready events
             if ( jQuery.fn.triggerHandler ) {
                 jQuery( document ).triggerHandler( "ready" );
                 jQuery( document ).off( "ready" );
@@ -3475,7 +3475,7 @@
     });
 
     /**
-     * Clean-up method for dom ready Events
+     * Clean-up method for dom ready events
      */
     function detach() {
         if ( document.addEventListener ) {
@@ -3547,7 +3547,7 @@
                                 return setTimeout( doScrollCheck, 50 );
                             }
 
-                            // detach all dom ready Events
+                            // detach all dom ready events
                             detach();
 
                             // and execute any waiting functions
@@ -4226,8 +4226,8 @@
         support.checkClone = div.cloneNode( true ).cloneNode( true ).lastChild.checked;
 
         // Support: IE<9
-        // Opera does not clone Events (and typeof div.attachEvent === undefined).
-        // IE9-10 clones Events bound via attachEvent, but they don't trigger with .click()
+        // Opera does not clone events (and typeof div.attachEvent === undefined).
+        // IE9-10 clones events bound via attachEvent, but they don't trigger with .click()
         support.noCloneEvent = true;
         if ( div.attachEvent ) {
             div.attachEvent( "onclick", function() {
@@ -4291,7 +4291,7 @@
     }
 
     /*
-     * Helper functions for managing Events -- not part of the public interface.
+     * Helper functions for managing events -- not part of the public interface.
      * Props to Dean Edwards' addEvent library for many of the ideas.
      */
     jQuery.event = {
@@ -4304,7 +4304,7 @@
                 handlers, type, namespaces, origType,
                 elemData = jQuery._data( elem );
 
-            // Don't attach Events to noData or text/comment nodes (but allow plain objects)
+            // Don't attach events to noData or text/comment nodes (but allow plain objects)
             if ( !elemData ) {
                 return;
             }
@@ -4333,11 +4333,11 @@
                         jQuery.event.dispatch.apply( eventHandle.elem, arguments ) :
                         undefined;
                 };
-                // Add elem as a property of the handle fn to prevent a memory leak with IE non-native Events
+                // Add elem as a property of the handle fn to prevent a memory leak with IE non-native events
                 eventHandle.elem = elem;
             }
 
-            // Handle multiple Events separated by a space
+            // Handle multiple events separated by a space
             types = ( types || "" ).match( rnotwhite ) || [ "" ];
             t = types.length;
             while ( t-- ) {
@@ -4376,7 +4376,7 @@
                     handlers = events[ type ] = [];
                     handlers.delegateCount = 0;
 
-                    // Only use addEventListener/attachEvent if the special Events handler returns false
+                    // Only use addEventListener/attachEvent if the special events handler returns false
                     if ( !special.setup || special.setup.call( elem, data, namespaces, eventHandle ) === false ) {
                         // Bind the global event handler to the element
                         if ( elem.addEventListener ) {
@@ -4403,7 +4403,7 @@
                     handlers.push( handleObj );
                 }
 
-                // Keep track of which Events have ever been used, for event optimization
+                // Keep track of which events have ever been used, for event optimization
                 jQuery.event.global[ type ] = true;
             }
 
@@ -4411,7 +4411,7 @@
             elem = null;
         },
 
-        // Detach an event or set of Events from an element
+        // Detach an event or set of events from an element
         remove: function( elem, types, handler, selector, mappedTypes ) {
             var j, handleObj, tmp,
                 origCount, t, events,
@@ -4431,7 +4431,7 @@
                 type = origType = tmp[1];
                 namespaces = ( tmp[2] || "" ).split( "." ).sort();
 
-                // Unbind all Events (on this namespace, if provided) for the element
+                // Unbind all events (on this namespace, if provided) for the element
                 if ( !type ) {
                     for ( type in events ) {
                         jQuery.event.remove( elem, type + types[ t ], handler, selector, true );
@@ -4444,7 +4444,7 @@
                 handlers = events[ type ] || [];
                 tmp = tmp[2] && new RegExp( "(^|\\.)" + namespaces.join("\\.(?:.*\\.|)") + "(\\.|$)" );
 
-                // Remove matching Events
+                // Remove matching events
                 origCount = j = handlers.length;
                 while ( j-- ) {
                     handleObj = handlers[ j ];
@@ -4494,7 +4494,7 @@
 
             cur = tmp = elem = elem || document;
 
-            // Don't do Events on text and comment nodes
+            // Don't do events on text and comment nodes
             if ( elem.nodeType === 3 || elem.nodeType === 8 ) {
                 return;
             }
@@ -4535,13 +4535,13 @@
                 [ event ] :
                 jQuery.makeArray( data, [ event ] );
 
-            // Allow special Events to draw outside the lines
+            // Allow special events to draw outside the lines
             special = jQuery.event.special[ type ] || {};
             if ( !onlyHandlers && special.trigger && special.trigger.apply( elem, data ) === false ) {
                 return;
             }
 
-            // Determine event propagation path in advance, per W3C Events spec (#9951)
+            // Determine event propagation path in advance, per W3C events spec (#9951)
             // Bubble up to document, then to window; watch for a global ownerDocument var (#9724)
             if ( !onlyHandlers && !special.noBubble && !jQuery.isWindow( elem ) ) {
 
@@ -4771,7 +4771,7 @@
             }
 
             // Support: IE<9
-            // For mouse/key Events, metaKey==false if it's undefined (#3368, #11328)
+            // For mouse/key events, metaKey==false if it's undefined (#3368, #11328)
             event.metaKey = !!event.metaKey;
 
             return fixHook.filter ? fixHook.filter( event, originalEvent ) : event;
@@ -4786,7 +4786,7 @@
             props: "char charCode key keyCode".split(" "),
             filter: function( event, original ) {
 
-                // Add which for key Events
+                // Add which for key events
                 if ( event.which == null ) {
                     event.which = original.charCode != null ? original.charCode : original.keyCode;
                 }
@@ -4829,7 +4829,7 @@
 
         special: {
             load: {
-                // Prevent triggered image.load Events from bubbling to window.load
+                // Prevent triggered image.load events from bubbling to window.load
                 noBubble: true
             },
             focus: {
@@ -4919,7 +4919,7 @@
 
             if ( elem.detachEvent ) {
 
-                // #8545, #7054, preventing memory leaks for custom Events in IE6-8
+                // #8545, #7054, preventing memory leaks for custom events in IE6-8
                 // detachEvent needed property on element, by name of that event, to properly expose it to GC
                 if ( typeof elem[ name ] === strundefined ) {
                     elem[ name ] = null;
@@ -4940,7 +4940,7 @@
             this.originalEvent = src;
             this.type = src.type;
 
-            // Events bubbling up the document may have been marked as prevented
+            // events bubbling up the document may have been marked as prevented
             // by a handler lower down the tree; reflect the correct value.
             this.isDefaultPrevented = src.defaultPrevented ||
             src.defaultPrevented === undefined &&
@@ -4966,7 +4966,7 @@
         this[ jQuery.expando ] = true;
     };
 
-// jQuery.Event is based on DOM3 Events as specified by the ECMAScript Language Binding
+// jQuery.Event is based on DOM3 events as specified by the ECMAScript Language Binding
 // http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
     jQuery.Event.prototype = {
         isDefaultPrevented: returnFalse,
@@ -5020,7 +5020,7 @@
         }
     };
 
-// Create mouseenter/leave Events using mouseover/out and event-time checks
+// Create mouseenter/leave events using mouseover/out and event-time checks
     jQuery.each({
         mouseenter: "mouseover",
         mouseleave: "mouseout",
@@ -5054,7 +5054,7 @@
 
         jQuery.event.special.submit = {
             setup: function() {
-                // Only need this for delegated form submit Events
+                // Only need this for delegated form submit events
                 if ( jQuery.nodeName( this, "form" ) ) {
                     return false;
                 }
@@ -5085,7 +5085,7 @@
             },
 
             teardown: function() {
-                // Only need this for delegated form submit Events
+                // Only need this for delegated form submit events
                 if ( jQuery.nodeName( this, "form" ) ) {
                     return false;
                 }
@@ -5117,7 +5117,7 @@
                             if ( this._just_changed && !event.isTrigger ) {
                                 this._just_changed = false;
                             }
-                            // Allow triggered, simulated change Events (#11500)
+                            // Allow triggered, simulated change events (#11500)
                             jQuery.event.simulate( "change", this, event, true );
                         });
                     }
@@ -5141,7 +5141,7 @@
             handle: function( event ) {
                 var elem = event.target;
 
-                // Swallow native change Events from checkbox/radio, we already triggered them above
+                // Swallow native change events from checkbox/radio, we already triggered them above
                 if ( this !== elem || event.isSimulated || event.isTrigger || (elem.type !== "radio" && elem.type !== "checkbox") ) {
                     return event.handleObj.handler.apply( this, arguments );
                 }
@@ -5155,7 +5155,7 @@
         };
     }
 
-// Create "bubbling" focus and blur Events
+// Create "bubbling" focus and blur events
     if ( !support.focusinBubbles ) {
         jQuery.each({ focus: "focusin", blur: "focusout" }, function( orig, fix ) {
 
@@ -5447,7 +5447,7 @@
 
         nodeName = dest.nodeName.toLowerCase();
 
-        // IE6-8 copies Events bound via attachEvent when using cloneNode.
+        // IE6-8 copies events bound via attachEvent when using cloneNode.
         if ( !support.noCloneEvent && dest[ jQuery.expando ] ) {
             data = jQuery._data( dest );
 
@@ -5534,7 +5534,7 @@
                 }
             }
 
-            // Copy the Events from the original to the clone
+            // Copy the events from the original to the clone
             if ( dataAndEvents ) {
                 if ( deepDataAndEvents ) {
                     srcElements = srcElements || getAll( elem );
@@ -8966,7 +8966,7 @@
             // timeout handle
                 timeoutTimer,
 
-            // To know if global Events are to be dispatched
+            // To know if global events are to be dispatched
                 fireGlobals,
 
                 transport,
@@ -8976,7 +8976,7 @@
                 s = jQuery.ajaxSetup( {}, options ),
             // Callbacks context
                 callbackContext = s.context || s,
-            // Context for global Events is callbackContext if it is a DOM node or jQuery collection
+            // Context for global events is callbackContext if it is a DOM node or jQuery collection
                 globalEventContext = s.context && ( callbackContext.nodeType || callbackContext.jquery ) ?
                     jQuery( callbackContext ) :
                     jQuery.event,
@@ -9102,8 +9102,8 @@
                 return jqXHR;
             }
 
-            // We can fire global Events as of now if asked to
-            // Don't fire Events if jQuery.event is undefined in an AMD-usage scenario (#15118)
+            // We can fire global events as of now if asked to
+            // Don't fire events if jQuery.event is undefined in an AMD-usage scenario (#15118)
             fireGlobals = jQuery.event && s.global;
 
             // Watch for a new set of requests
@@ -10024,7 +10024,7 @@
 
 
 
-// Attach a bunch of functions for handling common AJAX Events
+// Attach a bunch of functions for handling common AJAX events
     jQuery.each( [ "ajaxStart", "ajaxStop", "ajaxComplete", "ajaxError", "ajaxSuccess", "ajaxSend" ], function( i, type ) {
         jQuery.fn[ type ] = function( fn ) {
             return this.on( type, fn );
