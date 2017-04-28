@@ -16,7 +16,7 @@
                         <h4 class="panel-title">
                             <i class="livicon" data-name="list-ul" data-size="16" data-loop="true"
                                                    data-c="#fff" data-hc="white"></i>
-                            影音:{{ $news->title }}
+                            加工方式:{{ $add_on_option->title }}
                         </h4>
                         <span class="pull-right">
                             <a href="{{ URL::previous()}}" style="color: white">
@@ -30,11 +30,11 @@
                         <table class="table">
                             <tr>
                                 <td>id</td>
-                                <td>{{ $news->id }}</td>
+                                <td>{{ $add_on_option->id }}</td>
                             </tr>
                             <tr>
                                 <td>title</td>
-                                <td>{{ $news->title }}</td>
+                                <td>{{ $add_on_option->title }}</td>
                             </tr>
 
                         </table>

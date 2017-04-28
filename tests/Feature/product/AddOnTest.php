@@ -47,7 +47,7 @@ class AddOnTest extends TestCase
 
 
     /** @test */
-    public function group_edit_form_could_be_visited_from_admin()
+    public function addon_edit_form_could_be_visited_from_admin()
     {
         $addOn = factory(AddOn::class)->create([
             'title' => 'Wonderful AddOn'

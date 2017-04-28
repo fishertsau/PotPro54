@@ -42,12 +42,8 @@ class CreateProductModuleTables extends Migration
                 ->references('id')
                 ->on('group_categories')
                 ->onDelete('cascade');
-
-
             $table->timestamps();
         });
-
-
 
 
         Schema::create('group_add_ons', function (Blueprint $table) {
@@ -104,9 +100,7 @@ class CreateProductModuleTables extends Migration
     public function down()
     {
         Schema::drop('add_on_selected_options');
-        Schema::drop('add_on_options');
         Schema::drop('group_add_ons');
-
         Schema::drop('group_sub_categories');
         Schema::drop('group_categories');
     }

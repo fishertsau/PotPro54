@@ -27,10 +27,10 @@
                     </h4>
 
                     <div class="pull-right">
-                        <a href="{{ url('admin/product/addOn') }}" class="btn btn-success">
+                        <a href="{{ route('admin.addons.index') }}" class="btn btn-success">
                             <span class="glyphicon glyphicon-circle-arrow-right"></span> 加工配件
                         </a>
-                        <a href="{{ route('admin.product.addOnOption.create') }}" class="btn btn-sm btn-default"><span
+                        <a href="{{ route('admin.addonOptions.create') }}" class="btn btn-sm btn-default"><span
                                     class="glyphicon glyphicon-plus"></span> @lang('button.create')</a>
                     </div>
                 </div>
@@ -48,25 +48,26 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($add_on_options as $option)
-                            <tr>
-                                <td align="center">{{$option->id}}</td>
-                                <td class="text-danger">{{$option->title}}</td>
-                                <td class="text-primary">{!! $option->readable_settings !!}</td>
-                                <td style="text-align: left">{!! $option->body !!}</td>
-                                <td align="center">
-                                    <a href="{{ route('admin.product.addOnOption.edit', $option->id) }}">
-                                        <i class="livicon" data-name="edit" data-size="18" data-loop="true"
-                                           data-c="#428BCA" data-hc="#428BCA" title="edit addOnOption"></i>
-                                    </a>
-                                    <a href="{{ route('admin.product.addOnOption.confirm-delete', $option->id) }}" data-toggle="modal"
-                                       data-target="#delete_confirm">
-                                        <i class="livicon" data-name="remove-alt" data-size="18" data-loop="true"
-                                           data-c="#f56954" data-hc="#f56954" title="delete addOnOption"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
+                        {{--todo:  implement, to list out the addon option here --}}
+                        {{--@foreach ($add_on_options as $option)--}}
+                            {{--<tr>--}}
+                                {{--<td align="center">{{$option->id}}</td>--}}
+                                {{--<td class="text-danger">{{$option->title}}</td>--}}
+                                {{--<td class="text-primary">{!! $option->readable_settings !!}</td>--}}
+                                {{--<td style="text-align: left">{!! $option->body !!}</td>--}}
+                                {{--<td align="center">--}}
+                                    {{--<a href="{{ route('admin.addonOptions.edit', $option->id) }}">--}}
+                                        {{--<i class="livicon" data-name="edit" data-size="18" data-loop="true"--}}
+                                           {{--data-c="#428BCA" data-hc="#428BCA" title="edit addOnOption"></i>--}}
+                                    {{--</a>--}}
+                                    {{--<a href="{{ route('admin.addonOptions.confirm-delete', $option->id) }}" data-toggle="modal"--}}
+                                       {{--data-target="#delete_confirm">--}}
+                                        {{--<i class="livicon" data-name="remove-alt" data-size="18" data-loop="true"--}}
+                                           {{--data-c="#f56954" data-hc="#f56954" title="delete addOnOption"></i>--}}
+                                    {{--</a>--}}
+                                {{--</td>--}}
+                            {{--</tr>--}}
+                        {{--@endforeach--}}
 
                         </tbody>
                     </table>

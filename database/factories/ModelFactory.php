@@ -95,6 +95,14 @@ $factory->define(AddOn::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(AddOnOption::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->title,
+    ];
+});
+
+
+
 
 //$factory->define(Talk::class, function (Faker\Generator $faker) {
 //    return [

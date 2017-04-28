@@ -107,9 +107,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
         Route::put('addons/{addon}', 'Admin\Product\AddOnController@update')->name('admin.addons.update');
         Route::get('addons/{addon}', 'Admin\Product\AddOnController@show')->name('admin.addons.show');
 
-//        Route::resource('/addOn', 'Admin\Product\AddOnController');
 
         //加工配件選項
+        Route::get('addonOptions/{addOnOption}/edit', 'Admin\Product\AddOnOptionController@edit')->name('admin.addonOptions.edit');
+        Route::get('addonOptions/create', 'Admin\Product\AddOnOptionController@create')->name('admin.addonOptions.create');
+        Route::post('addonOptions', 'Admin\Product\AddOnOptionController@store')->name('admin.addonOptions.store');
+        Route::get('addonOptions', 'Admin\Product\AddOnOptionController@index')->name('admin.addonOptions.index');
+        Route::put('addonOptions/{addOnOption}', 'Admin\Product\AddOnOptionController@update')->name('admin.addonOptions.update');
+        Route::get('addonOptions/{addOnOption}', 'Admin\Product\AddOnOptionController@show')->name('admin.addonOptions.show');
+
 //        Route::resource('/addOnOption', 'Admin\Product\AddOnOptionController');
 //        Route::get('/addOnOption/{id}/delete', array('as' => 'admin.product.addOnOption.delete', 'uses' => 'Admin\Product\AddOnOptionController@getDelete'));
 //        Route::get('/addOnOption/{id}/confirm-delete', array('as' => 'admin.product.addOnOption.confirm-delete', 'uses' => 'Admin\Product\AddOnOptionController@getModalDelete'));

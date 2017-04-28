@@ -1,7 +1,7 @@
 <div class="form-horizontal">
-    @include('errors.list')
+@include('errors.list')
 
-            <!--加工方式名稱-->
+<!--加工方式名稱-->
     <div class="form-group">
         {!! Form::label('title', '加工方式',['class'=>'col-sm-2 control-label']) !!}
 
@@ -39,13 +39,14 @@
         {!! Form::hidden('settings', '') !!}
 
         <div class="col-sm-4">
-            @if (($newItem)  or (count($add_on_option->settings_array)<1))
-                @include('admin.product.addOnOption._addOnOptionSettingBlock',['setting'=>''])
-            @else
-                @foreach($add_on_option->settings_array as $setting)
-                    @include('admin.product.addOnOption._addOnOptionSettingBlock')
-                @endforeach
-            @endif
+            {{--todo: implement this --}}
+            {{--@if (($newItem)  or (count($add_on_option->settings_array)<1))--}}
+            {{--@include('admin.product.addOnOption._addOnOptionSettingBlock',['setting'=>''])--}}
+            {{--@else--}}
+            {{--@foreach($add_on_option->settings_array as $setting)--}}
+            {{--@include('admin.product.addOnOption._addOnOptionSettingBlock')--}}
+            {{--@endforeach--}}
+            {{--@endif--}}
         </div>
 
     </div>

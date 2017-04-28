@@ -10,15 +10,15 @@
 @section('header_styles')
     <link href="{{ asset('assets/vendors/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
     <!--end of page level css-->
-    @stop
+@stop
 
 
-    {{-- Page content --}}
-    @section('content')
+{{-- Page content --}}
+@section('content')
     @include('admin.product.addOnOption._contentHeader',
     ['section_title'=> '新增加工配件'])
 
-            <!-- Main content -->
+    <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-lg-12">
@@ -37,7 +37,10 @@
                     <div class="panel-body">
                         @include('admin.partials.errors')
 
-                        {!! Form::model($add_on_option = new \App\Models\Product\AddOnOption, ['method'=>'post','files'=>true,'action'=>'Admin\Product\AddOnOptionController@store']) !!}
+                        {!! Form::model($add_on_option = new \App\Models\Product\AddOnOption,
+                        ['method'=>'post',
+                        'files'=>true,
+                        'action'=>'Admin\Product\AddOnOptionController@store']) !!}
 
                         <div class="form-horizontal">
                             <!--標題-->
@@ -66,11 +69,11 @@
         </div>
         <!-- row-->
     </section>
-    @stop
+@stop
 
-    {{-- page level scripts --}}
-    @section('footer_scripts')
-            <!-- begining of page level js -->
+{{-- page level scripts --}}
+@section('footer_scripts')
+    <!-- begining of page level js -->
     <!--edit blog-->
     <script src="{{ asset('assets/vendors/select2/js/select2.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/admin/pages/addOnOption.js') }}" type="text/javascript"></script>

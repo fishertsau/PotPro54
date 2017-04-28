@@ -6,7 +6,6 @@ ok - Update
 ok - List view
 ok - See Detail
 
-
 - Can not be deleted
 - Set if Quantity setting is allowed
 - Qty is one, if quantity setting is not allowed
@@ -24,12 +23,12 @@ ok - See Detail
 
 
 # What can we do with add-on option?
-- Create page
-- Store
-- Edit page
-- Update
-- List view
-- Detail view
+ok - Create page
+ok - Store
+ok - Edit page
+ok - Update
+ok - List view
+ok - Detail view
 
 
 - Only Authorized person is allowed to do CRUD
