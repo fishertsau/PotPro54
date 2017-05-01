@@ -36,7 +36,7 @@
                                 @include('admin.channel.sales.create._selectedUser')
                             </div>
                             <div class="col-md-8">
-                                {!! Form::open(['method' => 'post', 'action' => ['Admin\Channel\SalesController@store'],'class'=>'form-horizontal'])!!}
+                                {!! Form::open(['method' => 'post', 'action' => ['Admin\Channel\ChannelController@store'],'class'=>'form-horizontal'])!!}
                                 <input type="text" class="hidden" name="user_id" v-model="selectedUser.id" required>
                                 <button type="submit" class="btn btn-danger full-width">
                                     <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;&nbsp;確定加入

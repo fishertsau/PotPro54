@@ -3,23 +3,15 @@
 namespace App\Http\Controllers\FrontEnd\Cart;
 
 use App;
+use Acme\Facade\Cart;
 use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
-    private $cart;
-
-    /**
-     * CartController constructor.
-     */
-    public function __construct()
-    {
-        $this->cart = App::make('cart');
-    }
 
     public function addItem()
     {
-        $this->cart->addItem(request()->all());
+        Cart::addItem(request()->all());
 
         return response()->json([
             'status' => 'success',
@@ -30,15 +22,14 @@ class CartController extends Controller
     public function update($itemId)
     {
         if (request('action') == 'remove') {
-            $this->cart->remove($itemId);
+            Cart::remove($itemId);
             return response()->json([
                 'status' => 'success',
                 'message' => 'selected product removed from the cart'
             ]);
         }
 
-
-        $this->cart->update([
+        Cart::update([
             'product_id' => $itemId,
             'qty' => request('qty')
         ]);

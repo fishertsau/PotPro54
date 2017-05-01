@@ -1,5 +1,6 @@
 <?php
 
+use App\Channel;
 use App\Models\Example\Example;
 use App\Models\Marketing\Video;
 use App\Models\Product\AddOn;
@@ -88,7 +89,6 @@ $factory->state(Group::class, 'unpublished', function () {
 });
 
 
-
 $factory->define(AddOn::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->title,
@@ -98,6 +98,11 @@ $factory->define(AddOn::class, function (Faker\Generator $faker) {
 $factory->define(AddOnOption::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->title,
+    ];
+});
+
+$factory->define(Channel::class, function (Faker\Generator $faker) {
+    return [
     ];
 });
 

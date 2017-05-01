@@ -11,10 +11,11 @@
     @include('admin.channel.sales._contentHeader',
    ['section_title'=> '通路清單'])
 
-    <input type="text"
+    {{--todo: implement  query term--}}
+    {{--<input type="text"
            class="hidden"
            v-model="queryTerm"
-           value="{{collect($queryTerm)->toJson()}}">
+           value="{{collect($queryTerm)->toJson()}}">--}}
 
     <section class="content paddingleft_right15">
         <div class="row">
@@ -29,7 +30,7 @@
 
                     <div class="pull-right">
                         @include('admin.channel.sales._salesSearch')
-                        <a href="{{ route('admin.sales.create') }}" class="btn btn-sm btn-default"><span
+                        <a href="{{ route('admin.channels.create') }}" class="btn btn-sm btn-default"><span
                                     class="glyphicon glyphicon-plus"></span> @lang('button.create')</a>
                     </div>
                 </div>

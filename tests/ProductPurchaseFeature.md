@@ -1,12 +1,12 @@
 # What can we do when we purchase products?
 Frontend
-- Put products in the cart
-- Remove products in the cart
+ok - Put products in the cart
+ok - Remove products in the cart
+ok - See item qty
 - See sum
-- See item qty
-- Send order with cart
 - Can choose addon
 - Can set addon options
+- Send order with cart
 - Save Cart in some temp place
 
 

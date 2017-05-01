@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('cart', function () {
-            return new Cart;
+            return new Cart(resolve('session'));
         });
 
         if ($this->app->environment('local', 'testing')) {

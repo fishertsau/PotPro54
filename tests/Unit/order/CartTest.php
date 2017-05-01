@@ -2,16 +2,21 @@
 
 namespace Tests;
 
+use Acme\Facade\Cart;
+use App;
 use App\Models\Product\Product;
+use Illuminate\Support\Collection;
 
 class CartTest extends TestCase
 {
-    private $cart;
-
-    protected function setUp()
+    /** @test */
+    public function can_see_cart_in_session_after_creation()
     {
-        parent::setUp();
-        $this->cart = resolve('cart');
+        $this->assertFalse(session()->has('cart'));
+
+        App::make('cart');
+
+        $this->assertTrue(session()->has('cart'));
     }
 
 
@@ -21,28 +26,28 @@ class CartTest extends TestCase
         $productA = factory(Product::class)->make(['id' => 1]);
         $productB = factory(Product::class)->make(['id' => 2]);
         $selectedProducts = ['product_id' => $productA->id, 'qty' => 10];
-        $this->assertEmpty($this->cart->items());
+        $this->assertEmpty(Cart::items());
 
         //add product in cart
-        $this->cart->addItem($selectedProducts);
+        Cart::addItem($selectedProducts);
 
-        $this->assertEquals($this->cart->count(), 10);
-        $this->assertCount(1, $this->cart->items());
-        $this->assertEquals($this->cart->items()->first()['product_id'], $productA->id);
+        $this->assertEquals(Cart::count(), 10);
+        $this->assertCount(1, Cart::items());
+        $this->assertEquals(Cart::items()->first()['product_id'], $productA->id);
 
         //Same product added again
         $sameProductSelected = ['product_id' => $productA->id, 'qty' => 2];
-        $this->cart->addItem($sameProductSelected);
+        Cart::addItem($sameProductSelected);
 
-        $this->assertEquals($this->cart->count(), 12);
-        $this->assertCount(1, $this->cart->items());
-        $this->assertEquals($this->cart->items()->first()['product_id'], $productA->id);
+        $this->assertEquals(Cart::count(), 12);
+        $this->assertCount(1, Cart::items());
+        $this->assertEquals(Cart::items()->first()['product_id'], $productA->id);
 
         //New product selected
         $newProductSelected = ['product_id' => $productB->id, 'qty' => 100];
-        $this->cart->addItem($newProductSelected);
-        $this->assertEquals($this->cart->count(), 112);
-        $this->assertCount(2, $this->cart->items());
+        Cart::addItem($newProductSelected);
+        $this->assertEquals(Cart::count(), 112);
+        $this->assertCount(2, Cart::items());
     }
 
 
@@ -51,9 +56,9 @@ class CartTest extends TestCase
     {
         $product = factory(Product::class)->make(['id' => 1]);
         $selectedProduct = ['product_id' => $product->id, 'qty' => 10];
-        $this->cart->addItem($selectedProduct);
+        Cart::addItem($selectedProduct);
 
-        $item = $this->cart->item($product->id);
+        $item = Cart::item($product->id);
 
         $this->assertEquals($item['product_id'], $product->id);
         $this->assertEquals($item['qty'], $selectedProduct['qty']);
@@ -62,7 +67,7 @@ class CartTest extends TestCase
     /** @test */
     public function return_null_if_no_product_found()
     {
-        $item = $this->cart->item(1);
+        $item = Cart::item(1);
 
         $this->assertNull($item);
     }
@@ -76,17 +81,17 @@ class CartTest extends TestCase
         $selectedProduct = ['product_id' => $productA->id, 'qty' => 10];
         $newSelectedProduct = ['product_id' => $productB->id, 'qty' => 100];
 
-        $this->cart->addItem($selectedProduct);
-        $this->cart->addItem($newSelectedProduct);
+        Cart::addItem($selectedProduct);
+        Cart::addItem($newSelectedProduct);
 
         //act
-        $this->cart->remove($productA->id);
+        Cart::remove($productA->id);
 
         //assert
-        $this->assertEquals(100, $this->cart->count());
-        $this->assertCount(1, $this->cart->items());
-        $this->assertNull($this->cart->item($productA->id));
-        $this->assertNotNull($this->cart->item($productB->id));
+        $this->assertEquals(100, Cart::count());
+        $this->assertCount(1, Cart::items());
+        $this->assertNull(Cart::item($productA->id));
+        $this->assertNotNull(Cart::item($productB->id));
     }
 
     /** @test */
@@ -94,43 +99,38 @@ class CartTest extends TestCase
     {
         $product = factory(Product::class)->make(['id' => 1]);
         $selectedProduct = ['product_id' => $product->id, 'qty' => 10];
-        $this->cart->addItem($selectedProduct);
-        $this->assertEquals(10, $this->cart->count());
-
+        Cart::addItem($selectedProduct);
+        $this->assertEquals(10, Cart::count());
 
         $updatedItem = ['product_id' => $product->id, 'qty' => 100];
 
         //act
-        $this->cart->update($updatedItem);
+        Cart::update($updatedItem);
 
         //assert
-        $this->assertEquals(100, $this->cart->count());
+        $this->assertEquals(100, Cart::count());
     }
 
 
-
-
-
-
     /** @test */
-    public function can_flush_the_cart()
+    public function can_destroy_the_cart()
     {
         $productA = factory(Product::class)->make(['id' => 1]);
         $productB = factory(Product::class)->make(['id' => 2]);
         $selectedProduct = ['product_id' => $productA->id, 'qty' => 10];
         $newSelectedProduct = ['product_id' => $productB->id, 'qty' => 100];
 
-        $this->cart->addItem($selectedProduct);
-        $this->cart->addItem($newSelectedProduct);
+        Cart::addItem($selectedProduct);
+        Cart::addItem($newSelectedProduct);
 
         //act
-        $this->cart->flush();
+        Cart::destroy();
 
         //assert
-        $this->assertEquals(0, $this->cart->count());
-        $this->assertCount(0, $this->cart->items());
-        $this->assertNull($this->cart->item($productA->id));
-        $this->assertNull($this->cart->item($productB->id));
+        $this->assertEquals(0, Cart::count());
+        $this->assertCount(0, Cart::items());
+        $this->assertNull(Cart::item($productA->id));
+        $this->assertNull(Cart::item($productB->id));
     }
 
     //can know the sum
@@ -139,13 +139,32 @@ class CartTest extends TestCase
     //add item validation
     //TODO: validate required information when adding item
 
-    //can see the detail of cart
-    //TODO: implement  $cart->all();
+
+    /** @test */
+    public function can_get_cart_details()
+    {
+        $productA = factory(Product::class)->make(['id' => 1]);
+        $productB = factory(Product::class)->make(['id' => 2]);
+        $selectedProduct = ['product_id' => $productA->id, 'qty' => 10];
+        $newSelectedProduct = ['product_id' => $productB->id, 'qty' => 100];
+
+        Cart::addItem($selectedProduct);
+        Cart::addItem($newSelectedProduct);
+
+        $cart = Cart::all();
+
+        //assert
+        $this->assertEquals(Collection::class, get_class($cart));
+        $this->assertCount(2, $cart);
+        $this->assertEquals(110, $cart->sum('qty'));
+        $this->assertTrue($cart->has($productA->id));
+        $this->assertTrue($cart->has($productB->id));
+    }
 
     public function tearDown()
     {
         parent::tearDown();
 
-        $this->cart->flush();
+        Cart::destroy();
     }
 }

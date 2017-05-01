@@ -123,9 +123,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 });
 
 
-
 /**** 購物車管理 ****/
-Route::group(['middleware' => ['web']],function(){
+Route::group(['middleware' => ['web']], function () {
     Route::post('cart', 'FrontEnd\Cart\CartController@addItem')->name('cart.addItem');
 //    Route::get('cart', 'FrontEnd\Cart\CartController@index');
     Route::post('cart/{itemId}/edit', 'FrontEnd\Cart\CartController@update')->name('cart.update');
@@ -133,25 +132,20 @@ Route::group(['middleware' => ['web']],function(){
 });
 
 
-
-
-
-
-
+/**** 通路管理 ****/
+Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function () {
+    Route::get('channels/{userId}/edit', 'Admin\Channel\ChannelController@edit')->name('admin.channels.edit');
+    Route::get('channels', 'Admin\Channel\ChannelController@index')->name('admin.channels.index');
+    Route::get('channels/create', 'Admin\Channel\ChannelController@create')->name('admin.channels.create');
+    Route::post('channels', 'Admin\Channel\ChannelController@store')->name('admin.channels.store');
+    Route::put('channels/{userId}', 'Admin\Channel\ChannelController@update')->name('admin.channels.update');
+//    Route::get('sales/listSimple', 'Admin\Channel\SalesController@makeListSimple');
+//    Route::get('sales/list', 'Admin\Channel\SalesController@makeList');
+//    Route::resource('sales', 'Admin\Channel\SalesController');
+});
 
 
 /**** 訂單管理 ****/
-
-
-
-
-
-
-
-
-
-
-
 
 
 /******** 前台管理  frontEnd  API **********************/
@@ -165,7 +159,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('sales/example/list', 'FrontEnd\Sales\SalesExampleController@makeList');
     Route::resource('sales/example', 'FrontEnd\Sales\SalesExampleController');
     Route::resource('sales', 'FrontEnd\Sales\SalesAccountController');
-
 
 
     //訂單與控制
@@ -191,6 +184,7 @@ Route::group(['middleware' => ['web']], function () {
 
 });
 
+
 /******** 後臺管理  Administrator  API **********************/
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function () {
 
@@ -205,9 +199,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function ()
     Route::get('todo/command/{todo}/{action}', 'Admin\TodoController@processCommand');
 
     /*通路管理*/
-    Route::get('sales/listSimple', 'Admin\Channel\SalesController@makeListSimple');
-    Route::get('sales/list', 'Admin\Channel\SalesController@makeList');
-    Route::resource('sales', 'Admin\Channel\SalesController');
+
 
     /*訂單管理*/
     Route::get('order/listExcel', 'Admin\OrderController@makeExcelList');

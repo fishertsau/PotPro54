@@ -5,23 +5,23 @@ namespace Acme\Order;
 
 class Cart
 {
-    //cart should be persisted into session
-
-    private $items = [];
+    private $session;
 
     /**
      * Cart constructor.
-     * @param array $items
+     * @param $session
+     * @internal param array $items
      */
-    public function __construct()
+    public function __construct($session)
     {
-        $this->items = collect();
+        $this->session = $session;
+        $this->session->put('cart.items', collect());
     }
 
 
     public function items()
     {
-        return $this->items;
+        return $this->session->get('cart.items');
     }
 
 
@@ -35,24 +35,24 @@ class Cart
                 'product_id' => $key,
                 'qty' => $oldProduct['qty'] + $productInfo['qty']
             ];
-            $this->items->pull($key);
-            $this->items->put($key, $updatedProduct);
+            $this->items()->pull($key);
+            $this->items()->put($key, $updatedProduct);
             return;
         }
 
-        $this->items->put($id, $productInfo);
+        $this->items()->put($id, $productInfo);
     }
 
 
     public function count()
     {
-        return $this->items->sum('qty');
+        return $this->items()->sum('qty');
     }
 
     public function item($id)
     {
         if ($this->findItemInCart($id)) {
-            return $this->items[$id];
+            return $this->items()[$id];
         }
 
         return null;
@@ -67,21 +67,32 @@ class Cart
         return $this->items()->where('product_id', $id)->first();
     }
 
+    /**
+     * @param $id
+     */
     public function remove($id)
     {
         $item = $this->item($id);
-
-        $this->items->pull($item['product_id']);
+        $this->items()->pull($item['product_id']);
     }
 
+    /**
+     * @param $productInfo
+     */
     public function update($productInfo)
     {
         $this->remove($productInfo['product_id']);
         $this->addItem($productInfo);
     }
 
-    public function flush()
+
+    public function destroy()
     {
-        $this->items = collect([]);
+        $this->session->put('cart.items', collect());
+    }
+
+    public function all()
+    {
+        return $this->items();
     }
 }
