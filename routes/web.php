@@ -126,9 +126,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 
 /**** 購物車管理 ****/
 Route::group(['middleware' => ['web']],function(){
-//    Route::post('cart', 'FrontEnd\Cart\CartController@addItem');
+    Route::post('cart', 'FrontEnd\Cart\CartController@addItem')->name('cart.addItem');
 //    Route::get('cart', 'FrontEnd\Cart\CartController@index');
-//    Route::post('cart/{cart}/edit', 'FrontEnd\Cart\CartController@update');
+    Route::post('cart/{itemId}/edit', 'FrontEnd\Cart\CartController@update')->name('cart.update');
 //    Route::post('cart/{cart}/delete', 'FrontEnd\Cart\CartController@destroy');
 });
 
