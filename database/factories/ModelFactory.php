@@ -1,16 +1,12 @@
 <?php
 
-use App\Channel;
-use App\Models\Example\Example;
-use App\Models\Marketing\Video;
-use App\Models\Product\AddOn;
-use App\Models\Product\AddOnOption;
-use App\Models\Product\Group;
-use App\Models\Product\GroupCategory;
-use App\Models\Product\GroupSubCategory;
-use App\Models\Product\Product;
 use App\User;
-use App\Models\Marketing\Talk;
+use App\Channel;
+use App\Models\Product\AddOn;
+use App\Models\Product\Group;
+use App\Models\Product\Product;
+use App\Models\Marketing\Video;
+use App\Models\Product\AddOnOption;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
     return [

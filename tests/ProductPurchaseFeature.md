@@ -3,13 +3,11 @@ Frontend
 ok - Put products in the cart
 ok - Remove products in the cart
 ok - See item qty
-- See sum
-- Can choose addon
+ok - See sum
+- Can choose to buy addon
 - Can set addon options
 - Send order with cart
 - Save Cart in some temp place
-
-
 
 
 - Only authorized person can put products in the cart

@@ -11,13 +11,21 @@ class CartController extends Controller
 
     public function addItem()
     {
-        Cart::addItem(request()->all());
+        //todo: unit price should be got somewhere else
+        $itemInfo = [
+            'product_id' => request('product_id'),
+            'qty' => request('qty'),
+            'unit_price' => 0
+        ];
+
+        Cart::addItem($itemInfo);
 
         return response()->json([
             'status' => 'success',
             'message' => 'products added into the cart'
         ]);
     }
+
 
     public function update($itemId)
     {
@@ -29,9 +37,11 @@ class CartController extends Controller
             ]);
         }
 
+        //todo: unit price should be got somewhere else
         Cart::update([
             'product_id' => $itemId,
-            'qty' => request('qty')
+            'qty' => request('qty'),
+            'unit_price' => 0
         ]);
 
         return response()->json([

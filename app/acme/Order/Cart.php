@@ -30,19 +30,24 @@ class Cart
         $id = $productInfo['product_id'];
 
         if ($oldProduct = $this->findItemInCart($id)) {
-            $key = $oldProduct['product_id'];
             $updatedProduct = [
-                'product_id' => $key,
-                'qty' => $oldProduct['qty'] + $productInfo['qty']
+                'product_id' => $id,
+                'qty' => $oldProduct['qty'] + $productInfo['qty'],
+                'sub_total' => ($oldProduct['qty'] + $productInfo['qty']) * $productInfo['unit_price']
             ];
-            $this->items()->pull($key);
-            $this->items()->put($key, $updatedProduct);
+
+            $this->doUpdateItem($id, $updatedProduct);
             return;
         }
 
+        $productInfo['sub_total'] = $productInfo['unit_price'] * $productInfo['qty'];
         $this->items()->put($id, $productInfo);
     }
 
+    public function total()
+    {
+        return $this->items()->sum('sub_total');
+    }
 
     public function count()
     {
@@ -94,5 +99,15 @@ class Cart
     public function all()
     {
         return $this->items();
+    }
+
+    /**
+     * @param $key
+     * @param $updatedProduct
+     */
+    private function doUpdateItem($key, $updatedProduct)
+    {
+        $this->items()->pull($key);
+        $this->items()->put($key, $updatedProduct);
     }
 }

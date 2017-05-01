@@ -73,7 +73,7 @@ class PurchaseProductTest extends TestCase
     public function can_remove_products_in_the_cart_from_frontend()
     {
         $productA = factory(Product::class)->create();
-        Cart::addItem(['product_id' => $productA->id, 'qty' => 1]);
+        Cart::addItem(['product_id' => $productA->id, 'qty' => 1, 'unit_price' => 0]);
         $this->assertNotNull(Cart::item($productA->id));
 
 
@@ -95,7 +95,7 @@ class PurchaseProductTest extends TestCase
     public function can_change_items_qty_in_cart()
     {
         $productA = factory(Product::class)->create();
-        Cart::addItem(['product_id' => $productA->id, 'qty' => 1]);
+        Cart::addItem(['product_id' => $productA->id, 'qty' => 1, 'unit_price' => 0]);
         $this->assertEquals(1, Cart::item($productA->id)['qty']);
 
 
@@ -115,6 +115,7 @@ class PurchaseProductTest extends TestCase
 
     public function can_make_order_with_shopping_cart()
     {
+        //TODO: implement this
         //cart is empty when the order is rendered
     }
 
@@ -129,12 +130,12 @@ class PurchaseProductTest extends TestCase
 
     public function only_sales_is_allowed_to_put_products_in_cart()
     {
-
+        //TODO: implement this
     }
 
 
     public function only_signedIn_user_is_allowed_to_use_cart()
     {
-
+        //TODO: implement this
     }
 }
