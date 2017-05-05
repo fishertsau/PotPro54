@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Acme\Order\Cart;
+use Acme\Order\CartRepository;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('cart', function () {
-            return new Cart(resolve('session'));
+            return new CartRepository(resolve('session'));
         });
 
         if ($this->app->environment('local', 'testing')) {

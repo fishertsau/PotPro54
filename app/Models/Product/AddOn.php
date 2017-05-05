@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class AddOn extends Model
 {
     protected $guarded = [];
-
-
-
 }
 
 
@@ -17,10 +14,10 @@ class AddOn extends Model
  * One AddOn can belong to  many groups.
  * */
 //public function groups()
-//{
-//    return $this->belongsToMany('App\Models\Product\Group', 'group_add_ons', 'add_on_id', 'group_id')
-//        ->withTimestamps();
-//}
+//    {
+//        return $this->belongsToMany(Group::class, 'group_add_ons', 'add_on_id', 'group_id')
+//            ->withTimestamps();
+//    }
 //
 ///**
 // * One AddOn can belong to  many AddOn Options.

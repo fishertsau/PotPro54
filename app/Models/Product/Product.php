@@ -28,6 +28,15 @@ class Product extends Model
         }
     }
 
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    public function getAddOnableAttribute()
+    {
+        return !!$this->group->addonable;
+    }
 }
 
 
@@ -135,10 +144,7 @@ class Product extends Model
 ///**
 // * setup the relationship between Group and Product.
 // */
-//public function group()
-//{
-//    return $this->belongsTo('App\Models\Product\Group');
-//}
+
 //
 ///**
 // * A product belongs to many users as users' favorite products.

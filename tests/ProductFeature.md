@@ -6,7 +6,8 @@
  ok - list out
  ok - See Detail
  
- - can not be delete
+ ok - can set which group it belongs to
+  - can not be delete
  - Dump to an Excel file
  - unpublished items could be not queried from frontend
  

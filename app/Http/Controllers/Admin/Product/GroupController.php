@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
-use Acme\Tool\Filterable\GroupFilter;
 use App;
-use Gate;
-use Session;
-use Illuminate\Http\Request;
-use App\Models\Product\Group;
-use App\Http\Requests\GroupRequest;
-use App\Http\Controllers\Controller;
 use Validator;
+use App\Models\Product\Group;
+use App\Http\Controllers\Controller;
+use Acme\Tool\Filterable\GroupFilter;
 
 class GroupController extends Controller
 {
@@ -54,6 +50,10 @@ class GroupController extends Controller
     {
         $group = Group::findOrFail($groupId);
         $group->update(request()->all());
+
+
+        $this->syncUpAddOnList($group, request('add_on_list'));
+
         return redirect(route('admin.groups.index'));
     }
 
@@ -68,9 +68,16 @@ class GroupController extends Controller
         return App::make(GroupFilter::class)->getList(request('queryTerm'));
     }
 
+
+    protected function syncUpAddOnList(Group $group, array $add_on_list = [])
+    {
+        if ($add_on_list == null) {
+            $add_on_list = [];
+        }
+
+        $group->addOnables()->sync($add_on_list);
+    }
 }
-
-
 
 
 ///*** 查詢條件名稱***/
@@ -133,8 +140,8 @@ class GroupController extends Controller
 //}
 //
 //
-///**
 // * Show the form for creating a new resource.
+///**
 // *
 // * @return \Illuminate\Http\Response
 // */
@@ -250,13 +257,7 @@ class GroupController extends Controller
 //    return $groups;
 //}
 //
-//protected function syncUpAddOnList($group, $add_on_list = [])
-//{
-//    if ($add_on_list == null) {
-//        $add_on_list = [];
-//    }
-//    $group->add_ons()->sync($add_on_list);
-//}
+
 //
 //public function productionSetting(Group $group)
 //{

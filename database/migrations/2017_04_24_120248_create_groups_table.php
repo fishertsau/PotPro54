@@ -17,6 +17,7 @@ class CreateGroupsTable extends Migration
 
             $table->string('title');
             $table->boolean('published')->default(false);
+            $table->boolean('addonable')->default(false); //�O�_�i�H�[�u
 
 
 //            $table->text('description');
@@ -28,7 +29,6 @@ class CreateGroupsTable extends Migration
 //            $table->char('good_at', 255);//�A�ήƲz
 //            $table->smallInteger('rank');
 //
-//            $table->boolean('add_on_allowed'); //�O�_�i�H�[�u
 //
 //            $table->string('auxiliary');
 //

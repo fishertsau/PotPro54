@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
-use Acme\Tool\Filterable\ProductFilter;
 use App;
+use Validator;
 use App\Models\Product\Product;
 use App\Http\Controllers\Controller;
+use Acme\Tool\Filterable\ProductFilter;
 use Acme\Repositories\ProductRepository;
-use Validator;
 
 class ProductController extends Controller
 {
@@ -41,7 +41,8 @@ class ProductController extends Controller
     public function store()
     {
         $validator = Validator::make(request()->all(), [
-            'title' => 'required'
+            'title' => 'required',
+            'group_id'=>'required'
         ]);
 
         if ($validator->fails()) {

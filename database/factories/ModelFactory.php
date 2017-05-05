@@ -46,8 +46,9 @@ $factory->state(Video::class, 'active', function () {
 $factory->define(Product::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->title,
-        'price' => $faker->numberBetween(500, 50000),
-        'description' => $faker->sentence
+        'list_price' => $faker->numberBetween(500, 50000),
+        'description' => $faker->sentence,
+        'group_id' => 1
     ];
 });
 
@@ -81,6 +82,18 @@ $factory->state(Group::class, 'published', function () {
 $factory->state(Group::class, 'unpublished', function () {
     return [
         'published' => false
+    ];
+});
+
+$factory->state(Group::class, 'addOnable', function () {
+    return [
+        'addonable' => true
+    ];
+});
+
+$factory->state(Group::class, 'unAddOnable', function () {
+    return [
+        'addonable' => false
     ];
 });
 

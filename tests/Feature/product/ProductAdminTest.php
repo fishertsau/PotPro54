@@ -30,8 +30,8 @@ class ProductAdminTest extends TestCase
     {
         $newProductInput = [
             'title' => 'A new product',
-            'price' => 12000,
-            'description' => 'The description for a product'
+            'list_price' => 12000,
+            'group_id' => 1
         ];
 
         $response = $this->post(route('admin.products.store'), $newProductInput);
@@ -40,8 +40,7 @@ class ProductAdminTest extends TestCase
 
         $response->assertRedirect(route('admin.products.edit', $product->id));
         $this->assertEquals($newProductInput['title'], $product->title);
-        $this->assertEquals($newProductInput['price'], $product->price);
-        $this->assertEquals($newProductInput['description'], $product->description);
+        $this->assertEquals($newProductInput['list_price'], $product->list_price);
         $this->assertCount(1, Product::all());
     }
 
@@ -49,7 +48,6 @@ class ProductAdminTest extends TestCase
     /** @test */
     public function product_edit_form_could_be_visited()
     {
-        $this->disableExceptionHandling();
         $product = factory(Product::class)->create([
             'title' => 'Wonderful Product'
         ]);
@@ -65,11 +63,16 @@ class ProductAdminTest extends TestCase
     public function product_could_be_updated_from_the_admin()
     {
         $product = factory(Product::class)->create([
-            'title' => 'Old product title'
+            'title' => 'Old product title',
+            'group_id' => 1
         ]);
 
         $updatedInfo = [
-            'title' => 'new product title'
+            'title' => 'new product title',
+            'group_id' => 2,
+            'published' => true,
+            'list_price' => 500,
+            'description' => 'product description'
         ];
 
         $response = $this->put(route('admin.products.update', $product->id), $updatedInfo);
@@ -78,6 +81,7 @@ class ProductAdminTest extends TestCase
         $response->assertRedirect(route('admin.products.index'));
         $this->assertEquals($product->id, $updatedProduct->id);
         $this->assertEquals($updatedInfo['title'], $updatedProduct->title);
+        $this->assertEquals($updatedInfo['group_id'], $updatedProduct->group_id);
     }
 
 
@@ -140,4 +144,6 @@ class ProductAdminTest extends TestCase
         $response->assertStatus(302)
             ->assertRedirect(route('admin.products.create'));
     }
+
+
 }

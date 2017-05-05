@@ -20,6 +20,17 @@ class ProductRepositoryTest extends TestCase
         $this->proRepo = App::make(ProductRepository::class);
     }
 
+    //todo: should decide if in product creation, group is necessary?
+    /** @test */
+//    public function should_be_created_through_group(){
+//
+//      //arrange
+//
+//      //act
+//
+//      //assert
+//    }
+
     /** @test */
     public function can_update_product()
     {

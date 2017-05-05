@@ -3,13 +3,14 @@
 namespace App\Models\Product;
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+
+//use Cviebrock\EloquentSluggable\Sluggable;
+//use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 
 class Group extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['title'];
 
     public function scopeStatus($query, $status_flag)
     {
@@ -30,6 +31,16 @@ class Group extends Model
         }
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+
+    public function addOnables()
+    {
+        return $this->belongsToMany(AddOn::class, 'group_add_ons', 'group_id', 'add_on_id');
+    }
 }
 
 //
@@ -94,19 +105,12 @@ class Group extends Model
 ///**
 // * One Group can have many products.
 // * */
-//public function products()
-//{
-//    return $this->hasMany('App\Models\Product\Product');
-//}
+
 //
 ///**
 // * One Group can belong to  many add_ons.
 // * */
-//public function add_ons()
-//{
-//    return $this->belongsToMany('App\Models\Product\AddOn', 'group_add_ons', 'group_id', 'add_on_id')
-//        ->withTimestamps();
-//}
+
 //
 ///**
 // * get all the add_ons ID associated with this group.

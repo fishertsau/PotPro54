@@ -15,9 +15,12 @@ class CreateProductTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->integer('price');
-            $table->text('description');
+            $table->integer('list_price')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('published')->default(false);
+            $table->integer('group_id')->unsigned();
+
+
 
 //            $table->string('model');//����
 //            $table->char('pn', 12);//���~�s��
@@ -38,7 +41,6 @@ class CreateProductTable extends Migration
 //
 //
 //            $table->string('type');//�׺��� �Ӱv�� �L����
-//            $table->integer('group_id')->unsigned();
 //            $table->foreign('group_id')
 //                ->references('id')
 //                ->on('groups')

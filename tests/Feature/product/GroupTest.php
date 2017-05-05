@@ -3,12 +3,13 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\Product\AddOn;
 use App\Models\Product\Group;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 /**
- *@group group
+ * @group group
  */
 class GroupTest extends TestCase
 {
@@ -67,12 +68,15 @@ class GroupTest extends TestCase
     /** @test */
     public function group_could_be_updated_from_the_admin()
     {
+        factory(AddOn::class, 5)->create();
         $group = factory(Group::class)->create([
             'title' => 'Old group title'
         ]);
 
+
         $updatedInfo = [
-            'title' => 'new group title'
+            'title' => 'new group title',
+            'add_on_list' => [1, 3, 5]
         ];
 
         $response = $this->put(route('admin.groups.update', $group->id), $updatedInfo);
@@ -81,6 +85,7 @@ class GroupTest extends TestCase
         $response->assertRedirect(route('admin.groups.index'));
         $this->assertEquals($group->id, $updatedGroup->id);
         $this->assertEquals($updatedInfo['title'], $updatedGroup->title);
+        $this->assertEquals([1, 3, 5], $updatedGroup->addOnables->pluck('id')->toArray());
     }
 
 
@@ -133,4 +138,6 @@ class GroupTest extends TestCase
         $response->assertStatus(302)
             ->assertRedirect(route('admin.groups.create'));
     }
+
+    //todo: subgroup_id is required to create a new group
 }

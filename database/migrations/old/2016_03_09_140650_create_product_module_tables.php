@@ -46,15 +46,7 @@ class CreateProductModuleTables extends Migration
         });
 
 
-        Schema::create('group_add_ons', function (Blueprint $table) {
-            $table->integer('group_id')->unsigned()->index();
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
 
-            $table->integer('add_on_id')->unsigned()->index();
-            $table->foreign('add_on_id')->references('id')->on('add_ons')->onDelete('cascade');
-
-            $table->timestamps();
-        });
 
         Schema::create('add_on_options', function (Blueprint $table) {
             $table->increments('id');
@@ -100,7 +92,7 @@ class CreateProductModuleTables extends Migration
     public function down()
     {
         Schema::drop('add_on_selected_options');
-        Schema::drop('group_add_ons');
+
         Schema::drop('group_sub_categories');
         Schema::drop('group_categories');
     }
