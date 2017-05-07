@@ -127,8 +127,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 Route::group(['middleware' => ['web']], function () {
     Route::post('cart', 'FrontEnd\Cart\CartController@addItem')->name('cart.addItem');
 //    Route::get('cart', 'FrontEnd\Cart\CartController@index');
-    Route::post('cart/{itemId}/edit', 'FrontEnd\Cart\CartController@update')->name('cart.update');
+//    Route::post('cart/{itemId}/edit', 'FrontEnd\Cart\CartController@update')->name('cart.update');
 //    Route::post('cart/{cart}/delete', 'FrontEnd\Cart\CartController@destroy');
+
+    //配件設定
+    Route::get('addOn/edit', 'FrontEnd\Cart\AddOnController@edit');
+//    Route::post('addOn/update', 'FrontEnd\Cart\AddOnController@update');
+    Route::post('addOn', 'FrontEnd\Cart\AddOnController@store')->name('cart.addAddon');
 });
 
 
@@ -144,8 +149,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function ()
 //    Route::resource('sales', 'Admin\Channel\SalesController');
 });
 
-
-/**** 訂單管理 ****/
 
 
 /******** 前台管理  frontEnd  API **********************/
@@ -166,9 +169,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('order', 'FrontEnd\Cart\OrderController@store');
 
 
-    //配件設定
-    Route::get('addOn/edit', 'FrontEnd\Cart\AddOnController@edit');
-    Route::post('addOn/update', 'FrontEnd\Cart\AddOnController@update');
 
     //案例管理
     Route::resource('/example', 'FrontEnd\ExampleController');
@@ -197,9 +197,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function ()
     /* 待辦事項*/
     Route::resource('todo', 'Admin\TodoController');
     Route::get('todo/command/{todo}/{action}', 'Admin\TodoController@processCommand');
-
-    /*通路管理*/
-
 
     /*訂單管理*/
     Route::get('order/listExcel', 'Admin\OrderController@makeExcelList');

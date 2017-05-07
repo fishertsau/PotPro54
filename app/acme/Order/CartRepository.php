@@ -27,79 +27,46 @@ class CartRepository
     }
 
 
-    public function addItem(array $productInfo = [])
+
+    public function addProduct(array $productInfo = [])
     {
         $productId = $productInfo['product_id'];
 
         if (Product::find($productId)->addonable) {
-            $this->generateNewItem($productInfo);
+            $this->generateNewProductItem($productInfo);
             return;
         }
 
-        if ($oldProduct = $this->findItemInCart($productId)) {
-            $this->updateOldItem($productInfo, $oldProduct, $productId);
+        if ($oldProduct = $this->findProductItemInCart($productId)) {
+            $this->updateProductItem($productInfo, $oldProduct, $productId);
             return;
         }
 
-        $this->generateNewItem($productInfo);
+        $this->generateNewProductItem($productInfo);
     }
 
-
-    public function total()
+    public function addAddon(array $addOnInfo = [])
     {
-        return $this->items()->sum('sub_total');
+        $rowId = $this->items()->count() + 1;
+        $this->items()->put($rowId, $addOnInfo);
     }
+
 
     public function count()
     {
         return $this->items()->sum('qty');
     }
 
-    public function item($id)
-    {
-        if ($this->findItemInCart($id)) {
-            return $this->items()[$id];
-        }
 
-        return null;
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    private function findItemInCart($id)
+    private function findProductItemInCart($id)
     {
         return $this->items()->where('product_id', $id)->first();
     }
-
-    /**
-     * @param $id
-     */
-    public function remove($id)
-    {
-        $item = $this->item($id);
-        $this->items()->pull($item['product_id']);
-    }
-
-    /**
-     * @param $productInfo
-     */
-//    public function update($productInfo)
-//    {
-//        $this->remove($productInfo['product_id']);
-//        $this->addItem($productInfo);
-//    }
 
 
     public function destroy()
     {
         $this->cart->put('cart.items', collect());
-    }
-
-    public function all()
-    {
-        return $this->items();
     }
 
     /**
@@ -117,32 +84,42 @@ class CartRepository
         return collect($this->items()->where('set_id', $setId)->all());
     }
 
-    /**
-     * @param array $productInfo
-     */
-    private function generateNewItem(array $productInfo)
-    {
-        $setId = $this->items()->count() + 1;
-        $productInfo['set_id'] = $setId;
-        $productInfo['sub_total'] = $productInfo['unit_price'] * $productInfo['qty'];
-        $this->items()->put($setId, $productInfo);
-    }
 
     /**
      * @param array $productInfo
-     * @param $oldProduct
-     * @param $id
      */
-    private function updateOldItem(array $productInfo, $oldProduct, $id)
+    private function generateNewProductItem(array $productInfo)
+    {
+        $setId = $this->items()->count() + 1;
+        $productInfo['set_id'] = $setId;
+        $this->items()->put($setId, $productInfo);
+    }
+
+    private function updateProductItem(array $productInfo, $oldProduct, $id)
     {
         $setId = $oldProduct['set_id'];
         $updatedProduct = [
             'set_id' => $setId,
             'product_id' => $id,
             'qty' => $oldProduct['qty'] + $productInfo['qty'],
-            'sub_total' => ($oldProduct['qty'] + $productInfo['qty']) * $productInfo['unit_price']
         ];
 
         $this->doUpdateItem($setId, $updatedProduct);
+    }
+
+
+    public function type($item)
+    {
+        $item = collect($item);
+
+        if ($item->has('addOn_id')) {
+            return 'addOn';
+        }
+
+        if ($item->has('product_id')) {
+            return 'product';
+        }
+
+        return 'undefined';
     }
 }

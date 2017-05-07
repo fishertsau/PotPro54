@@ -4,6 +4,7 @@ namespace Tests;
 
 
 use Acme\Facade\Cart;
+use App\Models\Product\AddOn;
 use App\Models\Product\Group;
 use App\Models\Product\Product;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -35,71 +36,64 @@ class PurchaseProductTest extends TestCase
     /** @test */
     public function can_put_products_in_the_cart_from_frontend()
     {
-        $addOnableGroup = factory(Group::class)->states('addOnable')->create();
         $unAddOnableGroup = factory(Group::class)->states('unAddOnable')->create();
-        $addOnableProductA = $addOnableGroup->products()->create(['title' => 'productAA']);
-
         $unAddOnableProductA = $unAddOnableGroup->products()->create(['title' => 'productUA']);
-        $unAddOnableProductB = $unAddOnableGroup->products()->create(['title' => 'productUA']);
 
         //put un-add-onable product A
         $selectedItems = ['product_id' => $unAddOnableProductA->id, 'qty' => 10];
         $response = $this->putToCart($selectedItems);
 
         $this->assertResponseSuccess($response);
-
-        $setId = Cart::items()->first()['set_id'];
-        $this->assertNotEmpty(Cart::items()->first()['set_id']);
-        $this->assertEquals(10, Cart::count()); //10
-
-        // todo: make array to property
-        $this->assertEquals($unAddOnableProductA->id, Cart::items()->first()['product_id']);
-        $this->assertCount(1, Cart::items());
-        $this->assertEquals($unAddOnableProductA->id, Cart::setItems($setId)->first()['product_id']);
-        $this->assertEquals($unAddOnableProductA->id, Cart::items($setId)->first()['product_id']);
+    }
 
 
-        //put more put un-add-onable product A
-        $moreSameProductItems = ['product_id' => $unAddOnableProductA->id, 'qty' => 30];
-
-        $response = $this->putToCart($moreSameProductItems);
-
-        $this->assertResponseSuccess($response);
-        $this->assertEquals(40, Cart::count()); //10+30
-        $this->assertEquals($unAddOnableProductA->id, Cart::items()->first()['product_id']);
-        $this->assertCount(1, Cart::items());
-        $this->assertEquals($unAddOnableProductA->id, Cart::setItems($setId)->first()['product_id']);
-        $this->assertEquals($unAddOnableProductA->id, Cart::items($setId)->first()['product_id']);
+    //todo: put addonable product in cart first, and then put in addons
+    //todo: how to let Cart::addProduct() generate rowId?
 
 
-        //put un-addonable product B
-        $differentProducts = ['product_id' => $unAddOnableProductB->id, 'qty' => 20];
+    /** @test */
+    public function can_put_several_add_ons_at_one_time()
+    {
+        //arrange
+        $addOnsInput = ['set_id' => 'setId',
+            'add_on' => [
+                [
+                    'addOn_id' => 1,
+                    'qty' => 10,
+                    'setting' => 'AddOnA Setting'],
+                [
+                    'addOn_id' => 2,
+                    'qty' => 5,
+                    'setting' => 'AddOnB Setting'],
+            ]
+        ];
 
-        $response = $this->putToCart($differentProducts);
+        //act
+        $this->post(route('cart.addAddon'), $addOnsInput);
 
-        $this->assertResponseSuccess($response);
-        $this->assertEquals(60, Cart::count()); //10+30+20
-        $this->assertCount(2, Cart::items());
-        $this->assertCount(2, Cart::items()->groupBy('set_id')->all());
+        //assert
+        collect($addOnsInput['add_on'])
+            ->each(function ($addon) {
+                $cartAddOn = Cart::items()
+                    ->where('addOn_id', $addon['addOn_id'])->first();
 
-        //put in addonable product A
-        $addonableProducts = ['product_id' => $addOnableProductA->id, 'qty' => 5];
-        $response = $this->putToCart($addonableProducts);
+                $this->assertEquals('setId', $cartAddOn['set_id']);
+                $this->assertEquals('addOn', Cart::type($cartAddOn));
+                $this->assertEquals($addon['addOn_id'], $cartAddOn['addOn_id']);
+                $this->assertEquals($addon['qty'], $cartAddOn['qty']);
+                $this->assertEquals($addon['setting'], $cartAddOn['setting']);
+            });
+    }
 
-        $this->assertResponseSuccess($response);
-        $this->assertEquals(65, Cart::count()); //10+30+20+5
-        $this->assertCount(3, Cart::items());
-        $this->assertCount(3, Cart::items()->groupBy('set_id')->all());
 
-        //put in more addonable product A
-        $addonableProducts = ['product_id' => $addOnableProductA->id, 'qty' => 10];
+    /** @test */
+    public function can_update_addons_for_a_set(){
 
-        $response = $this->putToCart($addonableProducts);
+      //arrange
 
-        $this->assertResponseSuccess($response);
-        $this->assertEquals(75, Cart::count());//10+30+20+5+10
-        $this->assertCount(4, Cart::items());
-        $this->assertCount(4, Cart::items()->groupBy('set_id')->all());
+      //act
+
+      //assert
     }
 
 
