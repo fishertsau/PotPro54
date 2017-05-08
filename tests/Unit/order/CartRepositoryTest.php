@@ -40,14 +40,16 @@ class CartRepositoryTest extends TestCase
         Cart::addProduct($selectedItems);
 
         $setId = Cart::items()->first()['set_id'];
+        $productItem = Cart::getProduct($setId, $unAddOnableProductA->id);
         $this->assertNotEmpty(Cart::items()->first()['set_id']);
         $this->assertEquals(10, Cart::count()); //10
 
+
         $this->assertCount(1, Cart::items());
-        $this->assertEquals($unAddOnableProductA->id, Cart::items()->first()['product_id']);
-        $this->assertEquals($unAddOnableProductA->id, Cart::setItems($setId)->first()['product_id']);
-        $this->assertEquals($unAddOnableProductA->id, Cart::items($setId)->first()['product_id']);
-        $this->assertEquals(10, Cart::items($setId)->first()['qty']);
+        $this->assertEquals($unAddOnableProductA->id, $productItem['product_id']);
+        $this->assertEquals($unAddOnableProductA->id, Cart::getSetItems($setId)->first()['product_id']);
+        $this->assertEquals($unAddOnableProductA->id, $productItem['product_id']);
+        $this->assertEquals(10, $productItem['qty']);
 
 
         //put more put un-add-onable product A
@@ -55,10 +57,10 @@ class CartRepositoryTest extends TestCase
 
         Cart::addProduct($moreSameProductItems);
 
+        $this->assertCount(1, Cart::items());
         $this->assertEquals(40, Cart::count()); //10+30
         $this->assertEquals($unAddOnableProductA->id, Cart::items()->first()['product_id']);
-        $this->assertCount(1, Cart::items());
-        $this->assertEquals($unAddOnableProductA->id, Cart::setItems($setId)->first()['product_id']);
+        $this->assertEquals($unAddOnableProductA->id, Cart::getSetItems($setId)->first()['product_id']);
         $this->assertEquals($unAddOnableProductA->id, Cart::items($setId)->first()['product_id']);
 
 
@@ -90,6 +92,27 @@ class CartRepositoryTest extends TestCase
 
 
     /** @test */
+    public function can_add_addOn()
+    {
+        //arrange
+        $addOnInfo = [
+            'set_id' => 1,
+            'addOn_id' => 3,
+            'qty' => 5,
+            'setting' => 'AddOnSetting'
+        ];
+
+        //act
+        Cart::addAddon($addOnInfo);
+
+        //assert
+        $addOn = Cart::getAddOn(1, 3);
+
+        $this->assertEquals(5, $addOn['qty']);
+        $this->assertEquals('AddOnSetting', $addOn['setting']);
+    }
+
+    /** @test */
     public function can_get_count()
     {
         $rowId = 1;
@@ -101,17 +124,6 @@ class CartRepositoryTest extends TestCase
         $this->assertEquals(120, Cart::count());
     }
 
-
-    /** @test */
-    public function can_get_total()
-    {
-
-        //arrange
-
-        //act
-
-        //assert
-    }
 
     /** @test */
     public function can_get_all_items()
@@ -129,15 +141,62 @@ class CartRepositoryTest extends TestCase
     }
 
 
-    /** test */
+    /**  @test */
     public function can_remove_item_by_rowId()
     {
+        Cart::items()->put('a', ['set_id'=>'s1','dataA' => 'dataA']);
+        Cart::items()->put('b', ['set_id'=>'s2','dataB' => 'dataB']);
+        $this->assertNotNull(Cart::items()->get('a'));
+        $this->assertNotNull(Cart::items()->get('b'));
+
+        Cart::remove('a');
+
+        $this->assertNull(Cart::items()->get('a'));
+        $this->assertNotNull(Cart::items()->get('b'));
     }
 
     /** @test */
     public function add_ons_in_same_set_are_removed_when_product_are_removed()
     {
+        //some addonable product
+        $product = factory(Group::class)->states('addOnable')->create()
+            ->products()->create(['title' => 'ProductTitle']);
+
+        Cart::addProduct(['product_id' => $product->id]);
+
+        $setId = Cart::items()->first()['set_id'];
+        $rowId = Cart::items()->keys()->first();
+
+        $addOnA = ['set_id' => $setId, 'addOn_id' => 1];
+        $addOnB = ['set_id' => $setId, 'addOn_id' => 2];
+        Cart::addAddon($addOnA);
+        Cart::addAddon($addOnB);
+
+
+        $this->assertNotNull(Cart::getProduct($setId, $product->id));
+        $this->assertNotNull(Cart::getAddon($setId, 1));
+        $this->assertNotNull(Cart::getAddon($setId, 2));
+
+
+        //remove product
+        Cart::remove($rowId);
+
+        //make sure the products and addons are not in cart
+        $this->assertNull(Cart::getProduct($setId, $product->id));
+        $this->assertNull(Cart::getAddon($setId, 1));
+        $this->assertNull(Cart::getAddon($setId, 2));
     }
+
+    /** @test */
+    public function only_the_deleted_addOn_item_is_removed_from_the_cart(){
+
+      //arrange
+
+      //act
+
+      //assert
+    }
+
 
     /** @test */
     public function can_update_an_item_quantity()

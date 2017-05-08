@@ -125,10 +125,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 
 /**** 購物車管理 ****/
 Route::group(['middleware' => ['web']], function () {
-    Route::post('cart', 'FrontEnd\Cart\CartController@addItem')->name('cart.addItem');
-//    Route::get('cart', 'FrontEnd\Cart\CartController@index');
-//    Route::post('cart/{itemId}/edit', 'FrontEnd\Cart\CartController@update')->name('cart.update');
-//    Route::post('cart/{cart}/delete', 'FrontEnd\Cart\CartController@destroy');
+    Route::post('cart', 'FrontEnd\Cart\CartController@store')->name('cart.addProduct');
+    Route::delete('cart/{rowId}/delete', 'FrontEnd\Cart\CartController@destroy')->name('cart.removeItem');
 
     //配件設定
     Route::get('addOn/edit', 'FrontEnd\Cart\AddOnController@edit');

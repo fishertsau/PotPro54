@@ -21,7 +21,7 @@ class PurchaseProductTest extends TestCase
 
     private function putToCart($products)
     {
-        return $this->json('post', route('cart.addItem'), $products);
+        return $this->json('post', route('cart.addProduct'), $products);
     }
 
     private function assertResponseSuccess($response)
@@ -47,15 +47,12 @@ class PurchaseProductTest extends TestCase
     }
 
 
-    //todo: put addonable product in cart first, and then put in addons
-    //todo: how to let Cart::addProduct() generate rowId?
-
-
     /** @test */
     public function can_put_several_add_ons_at_one_time()
     {
         //arrange
-        $addOnsInput = ['set_id' => 'setId',
+        $addOnsInput = [
+            'set_id' => 'setId',
             'add_on' => [
                 [
                     'addOn_id' => 1,
@@ -68,10 +65,9 @@ class PurchaseProductTest extends TestCase
             ]
         ];
 
-        //act
         $this->post(route('cart.addAddon'), $addOnsInput);
 
-        //assert
+
         collect($addOnsInput['add_on'])
             ->each(function ($addon) {
                 $cartAddOn = Cart::items()
@@ -87,37 +83,21 @@ class PurchaseProductTest extends TestCase
 
 
     /** @test */
-    public function can_update_addons_for_a_set(){
+    public function can_remove_item_in_cart_from_frontend()
+    {
+        Cart::items()->put('a', ['set_id'=>'s1','dataA' => 'dataA']);
+        Cart::items()->put('b', ['set_id'=>'s1','dataB' => 'dataB']);
+        $this->assertNotNull(Cart::items()->get('a'));
+        $this->assertNotNull(Cart::items()->get('b'));
 
-      //arrange
+        $rowId = 'a';
+        $this->delete(route('cart.removeItem', ['rowId' => $rowId]));
 
-      //act
-
-      //assert
+        $this->assertNull(Cart::items()->get('a'));
+        $this->assertNotNull(Cart::items()->get('b'));
     }
 
 
-    /** @test */
-//    public function can_remove_products_in_the_cart_from_frontend()
-//    {
-//        $productA = factory(Product::class)->create();
-//        Cart::addItem(['product_id' => $productA->id, 'qty' => 1, 'unit_price' => 0]);
-//        $this->assertNotNull(Cart::item($productA->id));
-//
-//
-//        $response = $this->json('post',
-//            route('cart.update', $productA->id),
-//            ['action' => 'remove']);
-//
-//        $response->assertSuccessful()
-//            ->assertExactJson([
-//                'status' => 'success',
-//                'message' => 'selected product removed from the cart'
-//            ]);
-//
-//        $this->assertNull(Cart::item($productA->id));
-//    }
-//
 //
 //    /** @test */
 //    public function can_change_items_qty_in_cart()
@@ -139,6 +119,17 @@ class PurchaseProductTest extends TestCase
 //
 //        $this->assertEquals(10, Cart::item($productA->id)['qty']);
 //    }
+
+    /** @test */
+    public function can_update_addons_for_a_set()
+    {
+
+        //arrange
+
+        //act
+
+        //assert
+    }
 
 
     public function can_make_order_with_shopping_cart()

@@ -20,13 +20,10 @@ class CartRepository
         $this->cart->put('cart.items', collect());
     }
 
-
     public function items()
     {
         return $this->cart->get('cart.items');
     }
-
-
 
     public function addProduct(array $productInfo = [])
     {
@@ -37,7 +34,7 @@ class CartRepository
             return;
         }
 
-        if ($oldProduct = $this->findProductItemInCart($productId)) {
+        if ($oldProduct = $this->findProduct($productId)) {
             $this->updateProductItem($productInfo, $oldProduct, $productId);
             return;
         }
@@ -47,7 +44,7 @@ class CartRepository
 
     public function addAddon(array $addOnInfo = [])
     {
-        $rowId = $this->items()->count() + 1;
+        $rowId = $this->generateRowId($addOnInfo['set_id'], $addOnInfo['addOn_id'], $addOnInfo);
         $this->items()->put($rowId, $addOnInfo);
     }
 
@@ -58,30 +55,63 @@ class CartRepository
     }
 
 
-    private function findProductItemInCart($id)
-    {
-        return $this->items()->where('product_id', $id)->first();
-    }
-
-
     public function destroy()
     {
         $this->cart->put('cart.items', collect());
     }
 
+    public function remove($rowId)
+    {
+        $setId = $this->items()->get($rowId)['set_id'];
+
+        $this->items()->forget($rowId);
+
+        //todo: should only proceed when the deleted item  type is 'product'
+        //if item type === 'product'
+        $this->getSetItems($setId)
+            ->filter(function ($item, $key) {
+                return $this->type($item) === 'addOn';
+            })
+            ->each(function ($item, $rowId) {
+                $this->items()->forget($rowId);
+            });
+    }
+
+
     /**
      * @param $key
      * @param $updatedProduct
      */
-    private function doUpdateItem($key, $updatedProduct)
+    private function doUpdateProductItem($key, $updatedProduct)
     {
         $this->items()->pull($key);
         $this->items()->put($key, $updatedProduct);
     }
 
-    public function setItems($setId)
+    public function getSetItems($setId)
     {
         return collect($this->items()->where('set_id', $setId)->all());
+    }
+
+    public function findProduct($id)
+    {
+        return $this->items()->where('product_id', $id)->first();
+    }
+
+    public function getAddon($setId, $addOnId)
+    {
+        return $this->items()
+            ->where('set_id', $setId)
+            ->where('addOn_id', $addOnId)
+            ->first();
+    }
+
+    public function getProduct($setId, $productId)
+    {
+        return $this->items()
+            ->where('set_id', $setId)
+            ->where('product_id', $productId)
+            ->first();
     }
 
 
@@ -90,23 +120,12 @@ class CartRepository
      */
     private function generateNewProductItem(array $productInfo)
     {
-        $setId = $this->items()->count() + 1;
+        $setId = $this->items()->pluck('set_id')->max() + 1;
         $productInfo['set_id'] = $setId;
-        $this->items()->put($setId, $productInfo);
+
+        $rowId = $this->generateRowId($setId, $productInfo['product_id'], $productInfo);
+        $this->items()->put($rowId, $productInfo);
     }
-
-    private function updateProductItem(array $productInfo, $oldProduct, $id)
-    {
-        $setId = $oldProduct['set_id'];
-        $updatedProduct = [
-            'set_id' => $setId,
-            'product_id' => $id,
-            'qty' => $oldProduct['qty'] + $productInfo['qty'],
-        ];
-
-        $this->doUpdateItem($setId, $updatedProduct);
-    }
-
 
     public function type($item)
     {
@@ -121,5 +140,34 @@ class CartRepository
         }
 
         return 'undefined';
+    }
+
+    /**
+     * @param array $productInfo
+     * @param $oldProduct
+     * @param $productId
+     */
+    private function updateProductItem(array $productInfo, $oldProduct, $productId)
+    {
+        $setId = $oldProduct['set_id'];
+        $rowId = $this->generateRowId($setId, $productId, $productInfo);
+
+        $updatedProduct = [
+            'set_id' => $setId,
+            'product_id' => $productId,
+            'qty' => $oldProduct['qty'] + $productInfo['qty'],
+        ];
+
+        $this->doUpdateProductItem($rowId, $updatedProduct);
+    }
+
+    /**
+     * @param $setId
+     * @param $entityId
+     * @return string
+     */
+    private function generateRowId($setId, $entityId, $item = 'undefined'): string
+    {
+        return md5($setId . $entityId . $this->type($item));
     }
 }
