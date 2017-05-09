@@ -51,32 +51,37 @@ class PurchaseProductTest extends TestCase
     public function can_put_several_add_ons_at_one_time()
     {
         //arrange
+        $addOnableGroup = factory(Group::class)->states('addOnable')->create();
+        $addOnableProduct = $addOnableGroup->products()->create(['title' => 'productUA']);
+        $selectedProduct = ['product_id' => $addOnableProduct->id, 'qty' => 10];
+        $this->putToCart($selectedProduct);
+        $setId = Cart::items()->first()['set_id'];
+
         $addOnsInput = [
-            'set_id' => 'setId',
+            'set_id' => $setId,
             'add_on' => [
                 [
                     'addOn_id' => 1,
-                    'qty' => 10,
                     'setting' => 'AddOnA Setting'],
                 [
                     'addOn_id' => 2,
-                    'qty' => 5,
                     'setting' => 'AddOnB Setting'],
             ]
         ];
 
+        //act
         $this->post(route('cart.addAddon'), $addOnsInput);
 
-
+        //assert
         collect($addOnsInput['add_on'])
-            ->each(function ($addon) {
-                $cartAddOn = Cart::items()
+            ->each(function ($addon) use ($setId) {
+                $cartAddOn = Cart::getSetItems($setId)
                     ->where('addOn_id', $addon['addOn_id'])->first();
 
-                $this->assertEquals('setId', $cartAddOn['set_id']);
+                $this->assertEquals($setId, $cartAddOn['set_id']);
                 $this->assertEquals('addOn', Cart::type($cartAddOn));
                 $this->assertEquals($addon['addOn_id'], $cartAddOn['addOn_id']);
-                $this->assertEquals($addon['qty'], $cartAddOn['qty']);
+                $this->assertEquals(10, $cartAddOn['qty']);
                 $this->assertEquals($addon['setting'], $cartAddOn['setting']);
             });
     }
@@ -85,8 +90,8 @@ class PurchaseProductTest extends TestCase
     /** @test */
     public function can_remove_item_in_cart_from_frontend()
     {
-        Cart::items()->put('a', ['set_id'=>'s1','dataA' => 'dataA']);
-        Cart::items()->put('b', ['set_id'=>'s1','dataB' => 'dataB']);
+        Cart::items()->put('a', ['set_id' => 's1', 'dataA' => 'dataA']);
+        Cart::items()->put('b', ['set_id' => 's1', 'dataB' => 'dataB']);
         $this->assertNotNull(Cart::items()->get('a'));
         $this->assertNotNull(Cart::items()->get('b'));
 
@@ -98,37 +103,107 @@ class PurchaseProductTest extends TestCase
     }
 
 
-//
-//    /** @test */
-//    public function can_change_items_qty_in_cart()
-//    {
-//        $productA = factory(Product::class)->create();
-//        Cart::addItem(['product_id' => $productA->id, 'qty' => 1, 'unit_price' => 0]);
-//        $this->assertEquals(1, Cart::item($productA->id)['qty']);
-//
-//
-//        $response = $this->json('post',
-//            route('cart.update', $productA->id),
-//            ['action' => 'update', 'qty' => 10]);
-//
-//        $response->assertSuccessful()
-//            ->assertExactJson([
-//                'status' => 'success',
-//                'message' => 'selected product qty updated from the cart'
-//            ]);
-//
-//        $this->assertEquals(10, Cart::item($productA->id)['qty']);
-//    }
-
     /** @test */
-    public function can_update_addons_for_a_set()
+    public function addOn_qty_is_updated_along_with_product_qty_update()
     {
+        $addOnableGroup = factory(Group::class)->states('addOnable')->create();
+        $addOnableProduct = $addOnableGroup->products()->create(['title' => 'productA']);
 
-        //arrange
+        //put product in cart
+        $selectedProduct = ['product_id' => $addOnableProduct->id, 'qty' => 3];
+        $this->putToCart($selectedProduct);
+        $rowId = Cart::items()->keys()->first();
+        $setId = collect(Cart::items()->where('product_id', $addOnableProduct->id)->all())
+            ->first()['set_id'];
 
-        //act
+        //put add on for product
+        $addOnsInput = [
+            'set_id' => $setId,
+            'add_on' => [
+                [
+                    'addOn_id' => 1,
+                    'setting' => 'AddOnA Setting'],
+                [
+                    'addOn_id' => 2,
+                    'setting' => 'AddOnB Setting'],
+            ]
+        ];
+        $this->post(route('cart.addAddon'), $addOnsInput);
+        $this->assertEquals(3, Cart::item($rowId)['qty']);
+        collect($addOnsInput['add_on'])
+            ->each(function ($addon) use ($setId) {
+                $cartAddOn = Cart::getSetItems($setId)
+                    ->where('addOn_id', $addon['addOn_id'])->first();
+                $this->assertEquals(3, $cartAddOn['qty']);
+            });
+
+
+        //act: update product in cart
+        $this->put(route('cart.update', $rowId), ['qty' => 10]);
+
 
         //assert
+        $this->assertEquals(10, Cart::item($rowId)['qty']);
+        collect($addOnsInput['add_on'])
+            ->each(function ($addon) use ($setId) {
+                $cartAddOn = Cart::getSetItems($setId)
+                    ->where('addOn_id', $addon['addOn_id'])->first();
+                $this->assertEquals(10, $cartAddOn['qty']);
+            });
+    }
+
+    /** @test */
+    public function addOn_qty_in_another_set_doesNot_change_when_product_qty_updated()
+    {
+        $addOnableGroup = factory(Group::class)->states('addOnable')->create();
+        $addOnableProduct = $addOnableGroup->products()->create(['title' => 'productA']);
+        $addOnableProductB = $addOnableGroup->products()->create(['title' => 'productB']);
+
+        //*** First put an addonable product and some addons in cart
+        //put product in cart
+        $selectedProduct = ['product_id' => $addOnableProduct->id, 'qty' => 3];
+        $this->putToCart($selectedProduct);
+        $rowId = Cart::items()->keys()->first();
+
+        //*** Secondly, put another product and some addons in cart
+        //put productB in cart
+        $selectedProductB = ['product_id' => $addOnableProductB->id, 'qty' => 5];
+        $this->putToCart($selectedProductB);
+        $setIdB = collect(Cart::items()->where('product_id', $addOnableProductB->id)->all())
+            ->first()['set_id'];
+
+        //put add on for productB
+        $addOnsInputB = [
+            'set_id' => $setIdB,
+            'add_on' => [
+                [
+                    'addOn_id' => 1,
+                    'setting' => 'AddOnA Setting'],
+                [
+                    'addOn_id' => 2,
+                    'setting' => 'AddOnB Setting'],
+            ]
+        ];
+        $this->post(route('cart.addAddon'), $addOnsInputB);
+        collect($addOnsInputB['add_on'])
+            ->each(function ($addon) use ($setIdB) {
+                $cartAddOn = Cart::getSetItems($setIdB)
+                    ->where('addOn_id', $addon['addOn_id'])->first();
+                $this->assertEquals(5, $cartAddOn['qty']);
+            });
+
+
+        //act: update product in cart
+        $this->put(route('cart.update', $rowId), ['qty' => 10]);
+
+        //assert
+        //Addon Qty for 2nd product is not changed
+        collect($addOnsInputB['add_on'])
+            ->each(function ($addon) use ($setIdB) {
+                $cartAddOn = Cart::getSetItems($setIdB)
+                    ->where('addOn_id', $addon['addOn_id'])->first();
+                $this->assertEquals(5, $cartAddOn['qty']);
+            });
     }
 
 

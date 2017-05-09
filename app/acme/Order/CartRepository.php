@@ -2,7 +2,6 @@
 
 namespace Acme\Order;
 
-
 use App\Models\Product\Product;
 
 class CartRepository
@@ -25,6 +24,8 @@ class CartRepository
         return $this->cart->get('cart.items');
     }
 
+
+    //todo: decouple product
     public function addProduct(array $productInfo = [])
     {
         $productId = $productInfo['product_id'];
@@ -42,9 +43,22 @@ class CartRepository
         $this->generateNewProductItem($productInfo);
     }
 
+    /**
+     * @param array $addOnInfo
+     */
     public function addAddon(array $addOnInfo = [])
     {
+        $productItem = $this->getSetItems($addOnInfo['set_id'])
+            ->first(function ($item) {
+                return isset($item['product_id']);
+            });
+
+        if ($productItem === null) {
+            throw new NoProductInSetException;
+        }
+
         $rowId = $this->generateRowId($addOnInfo['set_id'], $addOnInfo['addOn_id'], $addOnInfo);
+
         $this->items()->put($rowId, $addOnInfo);
     }
 
@@ -62,19 +76,13 @@ class CartRepository
 
     public function remove($rowId)
     {
-        $setId = $this->items()->get($rowId)['set_id'];
+        $item = $this->item($rowId);
 
         $this->items()->forget($rowId);
 
-        //todo: should only proceed when the deleted item  type is 'product'
-        //if item type === 'product'
-        $this->getSetItems($setId)
-            ->filter(function ($item, $key) {
-                return $this->type($item) === 'addOn';
-            })
-            ->each(function ($item, $rowId) {
-                $this->items()->forget($rowId);
-            });
+        if ($this->type($item) === 'product') {
+            $this->removeSetAddOn($item);
+        }
     }
 
 
@@ -169,5 +177,29 @@ class CartRepository
     private function generateRowId($setId, $entityId, $item = 'undefined'): string
     {
         return md5($setId . $entityId . $this->type($item));
+    }
+
+    /**
+     * @param $rowId
+     * @return mixed
+     */
+    public function item($rowId)
+    {
+        return $this->items()->get($rowId);
+    }
+
+    /**
+     * @param $setId
+     */
+    private function removeSetAddOn($item)
+    {
+        $setId = $item['set_id'];
+        $this->getSetItems($setId)
+            ->filter(function ($item, $key) {
+                return $this->type($item) === 'addOn';
+            })
+            ->each(function ($item, $rowId) {
+                $this->items()->forget($rowId);
+            });
     }
 }

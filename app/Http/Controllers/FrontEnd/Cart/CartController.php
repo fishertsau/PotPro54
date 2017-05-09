@@ -30,4 +30,22 @@ class CartController extends Controller
     {
         Cart::remove($rowId);
     }
+
+    public function update($rowId)
+    {
+        //todo: should validate the input has 'qty'
+
+        $setId = Cart::item($rowId)['set_id'];
+
+
+        Cart::getSetItems($setId)
+            ->map(function ($item, $key) {
+                return $key;
+            })
+            ->each(function ($rowId) {
+                $item = Cart::item($rowId);
+                $item['qty'] = request('qty');
+                Cart::items()->put($rowId, $item);
+            });
+    }
 }

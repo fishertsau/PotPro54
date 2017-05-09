@@ -127,6 +127,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 Route::group(['middleware' => ['web']], function () {
     Route::post('cart', 'FrontEnd\Cart\CartController@store')->name('cart.addProduct');
     Route::delete('cart/{rowId}/delete', 'FrontEnd\Cart\CartController@destroy')->name('cart.removeItem');
+    Route::put('cart/{rowId}', 'FrontEnd\Cart\CartController@update')->name('cart.update');
 
     //配件設定
     Route::get('addOn/edit', 'FrontEnd\Cart\AddOnController@edit');

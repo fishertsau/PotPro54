@@ -13,11 +13,16 @@ class AddOnController extends Controller
         $setId = request('set_id');
         $addOns = collect(request('add_on'));
 
-        $addOns->each(function ($addonInput) use ($setId) {
+        $qty = collect(Cart::items()->where('set_id', $setId)->all())
+            ->first(function ($item) {
+                return isset($item['product_id']);
+            })['qty'];
+
+        $addOns->each(function ($addonInput) use ($setId, $qty) {
             $addon = [
                 'set_id' => $setId,
                 'addOn_id' => $addonInput['addOn_id'],
-                'qty' => $addonInput['qty'],
+                'qty' => $qty,
                 'setting' => $addonInput['setting'],
             ];
 
